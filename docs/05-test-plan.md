@@ -1,64 +1,64 @@
-# Plan de pruebas
+# Test Plan
 
-## 1. Enfoque
+## 1. Approach
 
-Separar pruebas del software de ejecuciones del experimento. Los tests verifican contratos e invariantes; no deben afirmar que un LLM concreto necesariamente olvidará una regla.
+Separate software tests from experiment runs. Tests verify contracts and invariants; they must not claim that a specific LLM will necessarily forget a rule.
 
-## 2. Pruebas unitarias prioritarias
+## 2. Priority Unit Tests
 
-| ID | Caso | Resultado esperado |
+| ID | Case | Expected result |
 |---|---|---|
-| UT-01 | Dataset válido | Se crean 30–50 `MemoryItem` con IDs únicos |
-| UT-02 | Tipo o política inválida | Error de validación claro |
-| UT-03 | Triage de constraint | Se asigna `pin` |
-| UT-04 | Cinco rondas triage | Texto canónico de constraints permanece idéntico |
-| UT-05 | Evaluación con todos los términos | Ítem recuperado |
-| UT-06 | Falta un término | Ítem ambiguo/perdido según configuración |
-| UT-07 | Métrica por tipo | Numerador y denominador correctos |
-| UT-08 | Copias de estrategias | Una estrategia no muta la entrada de la otra |
-| UT-09 | Fake compactor | Misma entrada y semilla producen misma salida |
-| UT-10 | Error LLM | Se registra error; no se registra como olvido |
+| UT-01 | Valid dataset | 30–50 `MemoryItem` objects with unique IDs are created |
+| UT-02 | Invalid type or policy | Clear validation error |
+| UT-03 | Constraint triage | `pin` is assigned |
+| UT-04 | Five triage rounds | Canonical constraint text remains identical |
+| UT-05 | Evaluation with all terms | Item is retrieved |
+| UT-06 | Missing a term | Item is ambiguous/lost according to configuration |
+| UT-07 | Metric by type | Correct numerator and denominator |
+| UT-08 | Strategy copies | One strategy does not mutate the other's input |
+| UT-09 | Fake compactor | Same input and seed produce the same output |
+| UT-10 | LLM error | Error is recorded; it is not recorded as forgetting |
 
-## 3. Pruebas de integración
+## 3. Integration Tests
 
-- Adaptador HTTP envía `messages` a `/chat/completions`.
-- Timeout y códigos 4xx/5xx producen errores tipados.
-- Respuesta JSON cercada en Markdown se normaliza o rechaza de forma explícita.
-- Una ejecución offline genera `results.json` y `summary.md` válidos.
-- Una ejecución real registra modelo y parámetros sin incluir secretos.
-- El smoke test consulta el modelo servido por vLLM en localhost.
+- HTTP adapter sends `messages` to `/chat/completions`.
+- Timeout and 4xx/5xx codes produce typed errors.
+- JSON response fenced in Markdown is normalized or explicitly rejected.
+- An offline run generates valid `results.json` and `summary.md`.
+- A real run records the model and parameters without including secrets.
+- The smoke test queries the model served by vLLM on localhost.
 
-## 4. Pruebas de aceptación
+## 4. Acceptance Tests
 
-### AC-01: comparación completa
+### AC-01: Full Comparison
 
-**Dado** un dataset de 40 elementos, **cuando** se ejecutan cinco rondas con ambos brazos, **entonces** existen métricas por ronda, tipo y estrategia.
+**Given** a 40-item dataset, **when** five rounds run with both arms, **then** metrics exist by round, type, and strategy.
 
-### AC-02: constraint determinista
+### AC-02: Deterministic Constraint
 
-**Dada** una constraint crítica, **cuando** triage ejecuta cinco rondas, **entonces** su representación canónica conserva el mismo hash.
+**Given** a critical constraint, **when** triage runs five rounds, **then** its canonical representation retains the same hash.
 
-### AC-03: trazabilidad de pérdida
+### AC-03: Loss Traceability
 
-**Dado** que se pierde un elemento, **cuando** se crea el informe, **entonces** aparece su ID, tipo, ronda y estrategia.
+**Given** that an item is lost, **when** the report is created, **then** its ID, type, round, and strategy appear.
 
-### AC-04: igualdad experimental
+### AC-04: Experimental Equality
 
-**Cuando** comienza una ronda, **entonces** ambos brazos reciben el mismo dataset, ruido y presupuesto configurado.
+**When** a round begins, **then** both arms receive the same dataset, noise, and configured budget.
 
-## 5. Revisión de las pruebas adjuntas
+## 5. Review of the Attached Tests
 
-Las suites adjuntas sirven como referencia de smoke tests, pero no se copiarán ni serán dependencia de la PoC:
+The attached suites serve as smoke-test references, but they will not be copied or become PoC dependencies:
 
-- `test_response_time < 5s` es frágil en VPN, proxy o modelo local; medir y reportar latencia es preferible a fallar por un umbral fijo.
-- El test de contexto con 100.000 caracteres depende del límite del modelo y puede no lanzar error.
-- Las pruebas de temperatura y razonamiento son no deterministas.
-- Hay dos suites parcialmente duplicadas.
-- Instanciar el cliente validando red en `setUp` convierte tests unitarios en integración.
+- `test_response_time < 5s` is fragile over VPN, proxy, or a local model; measuring and reporting latency is preferable to failing on a fixed threshold.
+- The 100,000-character context test depends on the model limit and may not raise an error.
+- Temperature and reasoning tests are nondeterministic.
+- Two suites are partially duplicated.
+- Instantiating the client with network validation in `setUp` turns unit tests into integration tests.
 
-Recomendación: conservar una única prueba de integración del adaptador, marcada como `integration`, y crear tests unitarios con `FakeCompactor`.
+Recommendation: keep a single adapter integration test marked `integration`, and create unit tests with `FakeCompactor`.
 
-## 6. Comandos objetivo
+## 6. Target Commands
 
 ```bash
 pytest -m "not integration"
@@ -66,5 +66,5 @@ pytest -m integration
 python -m memory_cliff.cli run --offline
 ```
 
-Las pruebas `integration` requieren que vLLM esté arrancado; el resto debe funcionar en una máquina sin GPU.
+The `integration` tests require vLLM to be running; the rest must work on a machine without a GPU.
 

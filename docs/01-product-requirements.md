@@ -1,60 +1,60 @@
-# Requisitos del producto
+# Product Requirements
 
-## 1. Propósito
+## 1. Purpose
 
-Construir una aplicación de consola en Python que compare una memoria monolítica compactada por un LLM con una memoria tipada basada en `Knowledge Triage`.
+Build a Python console application that compares LLM-compacted monolithic memory with typed memory based on `Knowledge Triage`.
 
-## 2. Usuario objetivo
+## 2. Target User
 
-Arquitectos y desarrolladores que quieran comprender y demostrar el riesgo de degradar reglas, decisiones y conocimiento cuando el historial de un agente se resume repetidamente.
+Architects and developers who want to understand and demonstrate the risk of degrading rules, decisions, and knowledge when an agent's history is repeatedly summarized.
 
-## 3. Alcance del MVP
+## 3. MVP Scope
 
-La aplicación debe:
+The application must:
 
-1. Cargar entre 30 y 50 elementos de memoria desde JSON.
-2. Admitir cinco tipos: `constraint`, `decision`, `evidence`, `episode` y `preference`.
-3. Ejecutar dos estrategias sobre copias idénticas del dataset.
-4. Realizar cinco rondas de compactación.
-5. Aplicar perturbaciones deterministas entre rondas para simular crecimiento de contexto.
-6. Evaluar qué elementos siguen recuperables tras cada ronda.
-7. Generar resultados estructurados y un resumen legible.
+1. Load 30 to 50 memory items from JSON.
+2. Support five types: `constraint`, `decision`, `evidence`, `episode`, and `preference`.
+3. Run two strategies against identical copies of the dataset.
+4. Perform five compaction rounds.
+5. Apply deterministic perturbations between rounds to simulate context growth.
+6. Evaluate which items remain retrievable after each round.
+7. Generate structured results and a readable summary.
 
-## 4. Fuera de alcance
+## 4. Out of Scope
 
-- Interfaz web, base de datos, embeddings o vector database.
-- Memoria multiusuario o distribuida.
-- Evaluación semántica basada exclusivamente en otro LLM.
-- Reproducción exacta de los porcentajes publicados en el paper.
-- Integración con un framework agentic.
+- Web interface, database, embeddings, or vector database.
+- Multi-user or distributed memory.
+- Semantic evaluation based exclusively on another LLM.
+- Exact reproduction of the percentages published in the paper.
+- Integration with an agentic framework.
 
-## 5. Requisitos funcionales
+## 5. Functional Requirements
 
 | ID | Requisito | Prioridad |
 |---|---|---|
-| FR-01 | Cargar y validar un dataset JSON versionado | Must |
-| FR-02 | Ejecutar `baseline` y `triage` con igual configuración | Must |
-| FR-03 | Fijar constraints en la estrategia triage | Must |
-| FR-04 | Compactar episodios mediante LLM | Must |
-| FR-05 | Mantener conocimiento/evidencia fuera del resumen y recuperarlo por consulta simple | Must |
-| FR-06 | Ejecutar N rondas configurables, por defecto 5 | Must |
-| FR-07 | Medir recall global y por tipo | Must |
-| FR-08 | Registrar modelo, temperatura, límites y hashes de entrada | Must |
-| FR-09 | Exportar `results.json` y `summary.md` | Should |
-| FR-10 | Permitir ejecución sin API mediante un compactor falso determinista | Should |
+| FR-01 | Load and validate a versioned JSON dataset | Must |
+| FR-02 | Run `baseline` and `triage` with identical configuration | Must |
+| FR-03 | Pin constraints in the triage strategy | Must |
+| FR-04 | Compact episodes using an LLM | Must |
+| FR-05 | Keep knowledge/evidence outside the summary and retrieve it through a simple query | Must |
+| FR-06 | Run N configurable rounds, defaulting to 5 | Must |
+| FR-07 | Measure overall recall and recall by type | Must |
+| FR-08 | Record model, temperature, limits, and input hashes | Must |
+| FR-09 | Export `results.json` and `summary.md` | Should |
+| FR-10 | Support API-free execution through a deterministic fake compactor | Should |
 
-## 6. Requisitos no funcionales
+## 6. Non-Functional Requirements
 
 - Python 3.11 o superior.
-- Ejecución del LLM en local mediante vLLM y API OpenAI-compatible.
-- Proyecto instalable y ejecutable sin dependencias de otros repositorios.
-- Sin secretos en código ni resultados.
-- `temperature=0` cuando el proveedor lo permita.
-- Timeout explícito y reintentos limitados.
-- La lógica de dominio no dependerá de `requests` ni del proveedor LLM.
-- Una ejecución fallida no se contará como pérdida de memoria: se registrará como error experimental.
+- Run the LLM locally through vLLM and an OpenAI-compatible API.
+- Installable and executable project with no dependencies on other repositories.
+- No secrets in code or results.
+- `temperature=0` when supported by the provider.
+- Explicit timeout and limited retries.
+- Domain logic must not depend on `requests` or the LLM provider.
+- A failed run must not count as memory loss; it must be recorded as an experimental error.
 
-## 7. Modelo mínimo
+## 7. Minimum Model
 
 ```text
 MemoryItem
@@ -68,24 +68,24 @@ MemoryItem
   check_terms: list[str]
 ```
 
-`check_terms` contiene hechos canónicos breves necesarios para evaluar la conservación sin exigir coincidencia textual completa.
+`check_terms` contains brief canonical facts needed to evaluate preservation without requiring full textual matching.
 
-## 8. Criterios de aceptación
+## 8. Acceptance Criteria
 
-- La misma entrada alimenta ambos brazos sin mutación compartida.
-- Ninguna restricción con política `pin` se envía al LLM para ser reescrita.
-- Cada ronda produce métricas por estrategia y tipo.
-- Se puede identificar qué ítem se perdió, no solo un porcentaje agregado.
-- Los tests unitarios pueden ejecutarse sin conexión.
-- La configuración secreta se carga desde variables de entorno.
-- El modo offline de pruebas no requiere GPU ni servidor vLLM.
+- The same input feeds both arms without shared mutation.
+- No constraint with a `pin` policy is sent to the LLM for rewriting.
+- Each round produces metrics by strategy and type.
+- The lost item can be identified, not just an aggregate percentage.
+- Unit tests can run without a network connection.
+- Secret configuration is loaded from environment variables.
+- Offline test mode requires neither a GPU nor a vLLM server.
 
-## 9. Riesgos y mitigaciones
+## 9. Risks and Mitigations
 
-| Riesgo | Mitigación |
+| Risk | Mitigation |
 |---|---|
-| El LLM devuelve texto no estructurado | Contrato JSON, parser defensivo y fallo explícito |
-| Un verificador léxico penaliza paráfrasis válidas | `check_terms` normalizados y revisión manual de discrepancias |
-| El resultado depende de azar/proveedor | Temperatura baja, varias repeticiones y configuración registrada |
-| Comparación injusta por distinto presupuesto | Mismo límite de tokens y misma presión de compresión |
-| El pinning “hace trampa” | Declararlo como política arquitectónica deliberada y medir también coste de contexto |
+| The LLM returns unstructured text | JSON contract, defensive parser, and explicit failure |
+| A lexical verifier penalizes valid paraphrases | Normalized `check_terms` and manual review of discrepancies |
+| The result depends on randomness/provider | Low temperature, multiple repetitions, and recorded configuration |
+| Unfair comparison due to different budgets | Same token limit and same compression pressure |
+| Pinning "cheats" | Declare it as a deliberate architectural policy and also measure context cost |

@@ -1,43 +1,43 @@
 # Compaction Cliff PoC
 
-Pequeña aplicación Python para demostrar que una memoria de agente tratada como un único bloque pierde información crítica tras compactaciones sucesivas, y que una memoria tipada con políticas diferenciadas la conserva mejor.
+A small Python application demonstrating that treating agent memory as a single block loses critical information after successive compactions, while typed memory with differentiated policies preserves it more effectively.
 
-Es una PoC **independiente y autocontenida**. No importa código de otros proyectos. Ejecuta el modelo localmente mediante **vLLM**, exponiendo su API compatible con OpenAI en `http://localhost:8000/v1`.
+It is an **independent and self-contained** PoC. It does not import code from other projects. It runs the model locally through **vLLM**, exposing its OpenAI-compatible API at `http://localhost:8000/v1`.
 
-## Pregunta experimental
+## Experimental Question
 
-> ¿Conserva una estrategia de `Knowledge Triage` más restricciones críticas que una compactación convencional, usando los mismos elementos, modelo, presupuesto de salida y número de rondas?
+> Does a `Knowledge Triage` strategy preserve more critical constraints than conventional compaction, using the same items, model, output budget, and number of rounds?
 
-Este repositorio guía un experimento, no intenta reproducir íntegramente el paper ni construir una plataforma de memoria empresarial.
+This repository guides an experiment; it does not attempt to fully reproduce the paper or build an enterprise memory platform.
 
-## Documentos
+## Documents
 
-1. [01-product-requirements.md](01-product-requirements.md): objetivo, alcance, requisitos y criterios de aceptación.
-2. [02-architecture.md](02-architecture.md): arquitectura, modelo de datos y decisiones priorizadas.
-3. [03-experiment-protocol.md](03-experiment-protocol.md): dataset, procedimiento, métricas y controles.
-4. [04-implementation-plan.md](04-implementation-plan.md): estructura del proyecto, tareas y orden de ejecución.
-5. [05-test-plan.md](05-test-plan.md): estrategia de pruebas y casos esenciales.
-6. [06-vllm-local-guide.md](06-vllm-local-guide.md): instalación, selección del modelo y ejecución local.
+1. [01-product-requirements.md](01-product-requirements.md): purpose, scope, requirements, and acceptance criteria.
+2. [02-architecture.md](02-architecture.md): architecture, data model, and prioritized decisions.
+3. [03-experiment-protocol.md](03-experiment-protocol.md): dataset, procedure, metrics, and controls.
+4. [04-implementation-plan.md](04-implementation-plan.md): project structure, tasks, and execution order.
+5. [05-test-plan.md](05-test-plan.md): test strategy and essential cases.
+6. [06-vllm-local-guide.md](06-vllm-local-guide.md): installation, model selection, and local execution.
 
-## Resultado esperado
+## Expected Result
 
-La aplicación ejecutará dos brazos:
+The application will run two arms:
 
-- **Baseline**: todos los elementos se serializan como texto y se compactan con el LLM en cada ronda.
-- **Knowledge Triage**: las restricciones se fijan sin compresión; los episodios se compactan; el conocimiento queda disponible para recuperación selectiva.
+- **Baseline**: all items are serialized as text and compacted with the LLM in each round.
+- **Knowledge Triage**: constraints are pinned without compression; episodes are compacted; knowledge remains available for selective retrieval.
 
-Tras cada ronda se evaluará cada elemento mediante identificadores y afirmaciones verificables. La salida será `results.json` y un resumen de consola con recall por tipo, recall de restricciones, tamaño aproximado del contexto y fallos observados.
+After each round, every item will be evaluated using identifiers and verifiable claims. The output will be `results.json` and a console summary with recall by type, constraint recall, approximate context size, and observed failures.
 
-## Decisión de éxito del PoC
+## PoC Success Decision
 
-Se considerará demostrada la hipótesis si, después de cinco rondas:
+The hypothesis will be considered demonstrated if, after five rounds:
 
-- Triage conserva el 100 % de las restricciones críticas por construcción.
-- El baseline pierde al menos una restricción en alguna ejecución o muestra menor recall medio.
-- Los resultados son repetibles mediante semilla, dataset versionado y configuración registrada.
+- Triage preserves 100% of critical constraints by construction.
+- The baseline loses at least one constraint in some run or shows lower mean recall.
+- Results are repeatable through a seed, versioned dataset, and recorded configuration.
 
-Si el baseline no pierde restricciones, el experimento sigue siendo válido: deberá repetirse con más presión de compresión, sin cambiar las reglas entre estrategias.
+If the baseline does not lose constraints, the experiment remains valid: it should be repeated with more compression pressure without changing the rules between strategies.
 
-## Independencia
+## Independence
 
-Los cuatro archivos Python aportados se han revisado únicamente como referencia. No formarán parte del proyecto ni serán necesarios para instalarlo o ejecutarlo. El nuevo cliente será mínimo, interno a la PoC y específico para vLLM/OpenAI-compatible.
+The four provided Python files were reviewed solely as reference material. They will not be part of the project and will not be needed to install or run it. The new client will be minimal, internal to the PoC, and specific to vLLM/OpenAI-compatible APIs.

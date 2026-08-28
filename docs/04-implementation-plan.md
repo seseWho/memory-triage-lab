@@ -1,6 +1,6 @@
-# Plan de implementación
+# Implementation Plan
 
-## 1. Estructura propuesta
+## 1. Proposed Structure
 
 ```text
 compaction-cliff-poc/
@@ -23,7 +23,7 @@ compaction-cliff-poc/
 └── results/.gitkeep
 ```
 
-## 2. Flujo de ejecución
+## 2. Execution Flow
 
 ```bash
 python -m memory_cliff.cli run \
@@ -34,7 +34,7 @@ python -m memory_cliff.cli run \
   --output results/run-001
 ```
 
-El servidor se inicia por separado:
+The server is started separately:
 
 ```bash
 vllm serve Qwen/Qwen3-4B-Instruct-2507 \
@@ -44,64 +44,64 @@ vllm serve Qwen/Qwen3-4B-Instruct-2507 \
   --generation-config vllm
 ```
 
-El modelo es una propuesta inicial y debe ajustarse a la GPU disponible. El nombre servido, no el identificador del repositorio, será el valor de `LLM_MODEL`.
+The model is an initial proposal and must be adjusted to the available GPU. The served name, not the repository identifier, will be the value of `LLM_MODEL`.
 
-Debe existir también:
+The following must also work:
 
 ```bash
 python -m memory_cliff.cli run --offline
 pytest
 ```
 
-## 3. Backlog ordenado
+## 3. Ordered Backlog
 
-### 1. Dominio, dataset y evaluador determinista
+### 1. Domain, Dataset, and Deterministic Evaluator
 
-Es la primera prioridad porque define qué significa “recordar” y permite probar todo sin red. Sin una medida estable, cualquier resultado del LLM sería anecdótico.
+This is the first priority because it defines what "remembering" means and allows everything to be tested without a network. Without a stable measure, any LLM result would be anecdotal.
 
-**Consideración final:** revisar manualmente los `check_terms`; son parte del instrumento de medida.
+**Final consideration:** manually review the `check_terms`; they are part of the measurement instrument.
 
-### 2. Runner y fake compactor
+### 2. Runner and Fake Compactor
 
-Permite cerrar un recorrido end-to-end reproducible antes de introducir variabilidad externa.
+This closes a reproducible end-to-end path before introducing external variability.
 
-**Consideración final:** el fake debe eliminar elementos de manera predecible, no simular inteligencia.
+**Final consideration:** the fake should remove items predictably, not simulate intelligence.
 
-### 3. Baseline LLM
+### 3. LLM Baseline
 
-Implementa la compactación monolítica con contrato JSON y presupuesto fijo.
+Implement monolithic compaction with a JSON contract and fixed budget.
 
-**Consideración final:** guardar prompt y respuesta bruta por ronda para diagnosticar pérdidas.
+**Final consideration:** save the prompt and raw response for each round to diagnose losses.
 
-### 4. Estrategia Knowledge Triage
+### 4. Knowledge Triage Strategy
 
-Clasifica, fija constraints, compacta episodios y recupera conocimiento por metadatos/términos.
+Classify, pin constraints, compact episodes, and retrieve knowledge by metadata/terms.
 
-**Consideración final:** la clasificación inicial será declarada en el dataset; clasificación automática sería otro experimento.
+**Final consideration:** the initial classification will be declared in the dataset; automatic classification would be another experiment.
 
-### 5. Informes y repeticiones
+### 5. Reports and Repetitions
 
-Añade comparación por ronda, agregados y artefactos auditables.
+Add per-round comparison, aggregates, and auditable artifacts.
 
-**Consideración final:** priorizar JSON y Markdown; un dashboard no aporta valor todavía.
+**Final consideration:** prioritize JSON and Markdown; a dashboard does not add value yet.
 
-### 6. Extensiones opcionales
+### 6. Optional Extensions
 
-Tercer brazo con prompt reforzado, juez LLM, embeddings y UI.
+Third arm with a reinforced prompt, LLM judge, embeddings, and UI.
 
-**Consideración final:** solo incorporarlas después de obtener una línea base clara.
+**Final consideration:** add them only after obtaining a clear baseline.
 
-## 4. Estimación pequeña
+## 4. Rough Estimate
 
-| Bloque | Esfuerzo orientativo |
+| Block | Approximate effort |
 |---|---:|
-| Dominio + dataset + evaluación | 2–3 h |
+| Domain + dataset + evaluation | 2–3 h |
 | Runner + fake | 1–2 h |
-| Baseline + adaptación cliente | 2 h |
+| Baseline + client adapter | 2 h |
 | Triage | 2–3 h |
-| Informes + documentación de ejecución | 1–2 h |
+| Reports + execution documentation | 1–2 h |
 
-Total estimado: 8–12 horas para un PoC limpio.
+Estimated total: 8–12 hours for a clean PoC.
 
 ## 5. Configuración
 
@@ -113,15 +113,15 @@ LLM_TIMEOUT_SECONDS=60
 LLM_MAX_TOKENS=1200
 ```
 
-Nunca se incluirá un `.env` real en control de versiones.
+Never include a real `.env` file in version control.
 
-En vLLM local, `LLM_API_KEY` puede fijarse a un valor no secreto como `local` si el cliente exige una cadena.
+With local vLLM, `LLM_API_KEY` can be set to a non-secret value such as `local` if the client requires a string.
 
 ## 6. Definition of Done
 
-- Tests offline en verde.
-- Ejecución real completa con cinco rondas para ambas estrategias.
-- Dataset y configuración identificables por hash.
-- Resultados contienen pérdidas por ID y recall por tipo.
-- Ninguna constraint fijada se modifica en triage.
-- README incluye comando exacto y limitaciones observadas.
+- Offline tests pass.
+- Complete real execution with five rounds for both strategies.
+- Dataset and configuration are identifiable by hash.
+- Results contain losses by ID and recall by type.
+- No pinned constraint is modified in triage.
+- README includes the exact command and observed limitations.

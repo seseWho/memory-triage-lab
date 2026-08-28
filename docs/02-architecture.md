@@ -1,82 +1,82 @@
-# Arquitectura y decisiones
+# Architecture and Decisions
 
-## 1. Vista lógica
+## 1. Logical View
 
 ```mermaid
 flowchart TD
-    D["Dataset versionado"] --> R["Experiment runner"]
+    D["Versioned dataset"] --> R["Experiment runner"]
     R --> B["Baseline compactor"]
     R --> T["Triage memory"]
     B --> E["Deterministic evaluator"]
     T --> E
     E --> O["Results + summary"]
-    V["vLLM local server"] --> L["OpenAI-compatible adapter"]
+    V["Local vLLM server"] --> L["OpenAI-compatible adapter"]
     L --> B
     L --> T
 ```
 
-## 2. Componentes
+## 2. Components
 
-- `domain`: `MemoryItem`, políticas y resultados. No conoce HTTP.
-- `strategies`: interfaz `MemoryStrategy` y las implementaciones `BaselineStrategy` y `TriageStrategy`.
-- `llm`: puerto `TextCompactor` y adaptadores real/falso.
-- `evaluation`: comprobaciones deterministas, métricas y comparación.
-- `runner`: orquesta rondas y perturbaciones.
-- `reporting`: JSON completo y resumen Markdown.
-- `vLLM`: proceso local independiente que sirve el modelo; no se incrusta en el dominio ni en el runner.
+- `domain`: `MemoryItem`, policies, and results. It knows nothing about HTTP.
+- `strategies`: `MemoryStrategy` interface and `BaselineStrategy` and `TriageStrategy` implementations.
+- `llm`: `TextCompactor` port and real/fake adapters.
+- `evaluation`: deterministic checks, metrics, and comparison.
+- `runner`: orchestrates rounds and perturbations.
+- `reporting`: complete JSON and Markdown summary.
+- `vLLM`: independent local process serving the model; it is not embedded in the domain or runner.
 
-## 3. Políticas de triage
+## 3. Triage Policies
 
-| Tipo | Política MVP | Motivo |
+| Type | MVP Policy | Reason |
 |---|---|---|
-| Constraint | `pin` | Una regla crítica no debe depender de una paráfrasis probabilística |
-| Decision | `pin` si es crítica; si no, `compact` | Preserva decisiones irreversibles sin inflar todo el contexto |
-| Episode | `compact` | El detalle temporal suele admitir pérdida controlada |
-| Evidence | `retrieve` | Se conserva íntegra fuera del contexto activo |
-| Preference | `compact` | Puede resumirse, salvo que se marque crítica |
+| Constraint | `pin` | A critical rule must not depend on a probabilistic paraphrase |
+| Decision | `pin` if critical; otherwise `compact` | Preserves irreversible decisions without bloating the entire context |
+| Episode | `compact` | Temporal detail usually permits controlled loss |
+| Evidence | `retrieve` | Preserved intact outside the active context |
+| Preference | `compact` | Can be summarized unless marked critical |
 
-## 4. Soluciones ordenadas por adecuación
+## 4. Solutions Ordered by Fit
 
-### 1. Memoria tipada con políticas deterministas — elegida
+### 1. Typed Memory with Deterministic Policies - Selected
 
-Es la solución más adecuada porque prueba directamente la hipótesis arquitectónica: clasificación, retención diferenciada y constraints fijadas. Es pequeña, observable y trasladable a sistemas empresariales.
+This is the most suitable solution because it directly tests the architectural hypothesis: classification, differentiated retention, and pinned constraints. It is small, observable, and transferable to enterprise systems.
 
-**Consideración final:** el MVP debe mantener la recuperación simple —por etiquetas o términos— para no confundir el efecto del triage con la calidad de un vector store.
+**Final consideration:** the MVP should keep retrieval simple - by labels or terms - so the effect of triage is not confused with vector-store quality.
 
-### 2. Doble prompt de compactación con instrucciones de preservación
+### 2. Dual Compaction Prompt with Preservation Instructions
 
-Es fácil de implementar sobre el cliente existente y constituye un baseline reforzado útil. Sin embargo, una instrucción como “no pierdas reglas” sigue delegando una garantía de seguridad en un comportamiento probabilístico.
+It is easy to implement on the existing client and provides a useful reinforced baseline. However, an instruction such as "do not lose rules" still delegates a safety guarantee to probabilistic behavior.
 
-**Consideración final:** conviene añadirla más adelante como tercer brazo, no sustituir con ella al triage.
+**Final consideration:** add it later as a third arm rather than replacing triage with it.
 
-### 3. Recuperación vectorial de toda la memoria
+### 3. Vector Retrieval of All Memory
 
-Puede escalar mejor y recuperar conocimiento relevante, pero no garantiza que una constraint aparezca siempre en el contexto. Añade embeddings, indexado y nuevas variables al experimento.
+It may scale better and retrieve relevant knowledge, but it does not guarantee that a constraint always appears in context. It adds embeddings, indexing, and new variables to the experiment.
 
-**Consideración final:** apropiada para una segunda fase centrada en knowledge retrieval, no para probar primero la conservación de reglas.
+**Final consideration:** appropriate for a second phase focused on knowledge retrieval, not for initially testing rule preservation.
 
-### 4. Aumentar la ventana de contexto y evitar compactar
+### 4. Increase the Context Window and Avoid Compaction
 
-Reduce el problema temporalmente, pero aumenta coste y latencia y no elimina la degradación cuando se alcance el nuevo límite. Tampoco introduce lifecycle explícito.
+It reduces the problem temporarily, but increases cost and latency and does not eliminate degradation when the new limit is reached. It also introduces no explicit lifecycle.
 
-**Consideración final:** solo sirve como control o aplazamiento, no como arquitectura de memoria persistente.
+**Final consideration:** useful only as a control or postponement, not as a persistent-memory architecture.
 
-## 5. Decisiones de diseño
+## 5. Design Decisions
 
-- La evaluación primaria será determinista. Un juez LLM opcional puede añadirse después, pero no decidirá por sí solo el resultado.
-- La unidad de análisis es el `MemoryItem`, nunca una palabra aislada.
-- El runner guardará el texto generado en cada ronda para permitir auditoría.
-- El baseline recibirá toda la memoria serializada; triage reconstruirá el contexto activo desde stores separados.
-- El cliente LLM se envolverá tras un puerto y no se importará directamente desde dominio.
+- The primary evaluation will be deterministic. An optional LLM judge may be added later, but it will not decide the result on its own.
+- The unit of analysis is the `MemoryItem`, never an isolated word.
+- The runner will store the text generated in each round to support auditing.
+- The baseline will receive all serialized memory; triage will reconstruct active context from separate stores.
+- The LLM client will be wrapped behind a port and will not be imported directly from the domain.
 
-## 6. Relación con el código adjunto
+## 6. Relationship to the Attached Code
 
-El código adjunto no será una dependencia. Solo confirma el contrato general de un endpoint `/chat/completions`. La PoC implementará un adaptador propio con:
+The attached code will not be a dependency. It only confirms the general contract of a `/chat/completions` endpoint. The PoC will implement its own adapter with:
 
-1. SDK `openai` apuntando por defecto a `http://localhost:8000/v1`.
-2. `messages`, temperatura, semilla y límite de salida explícitos.
-3. Timeout y errores propios del adaptador.
-4. Respuesta reducida a texto más metadatos de uso.
-5. Inyección del adaptador para sustituirlo por `FakeCompactor` en tests.
+1. `openai` SDK pointing by default to `http://localhost:8000/v1`.
+2. Explicit `messages`, temperature, seed, and output limit.
+3. Adapter-specific timeout and errors.
+4. Response reduced to text plus usage metadata.
+5. Adapter injection to replace it with `FakeCompactor` in tests.
 
-No se realizará una petición de validación dentro del constructor: la salud del servidor se comprobará mediante un comando explícito.
+No validation request will be made inside the constructor: server health will be checked through an explicit command.

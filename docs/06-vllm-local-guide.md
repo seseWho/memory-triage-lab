@@ -1,42 +1,42 @@
-# Guía de ejecución local con vLLM
+# Local vLLM Execution Guide
 
-## 1. Decisión
+## 1. Decision
 
-La PoC usará vLLM como servidor de inferencia local y un cliente OpenAI-compatible dentro de la aplicación. Esta separación mantiene el experimento independiente y permite cambiar de modelo sin tocar dominio, estrategias ni métricas.
+The PoC will use vLLM as a local inference server and an OpenAI-compatible client inside the application. This separation keeps the experiment independent and allows the model to change without touching the domain, strategies, or metrics.
 
-## 2. Requisitos prácticos
+## 2. Practical Requirements
 
-- Linux es la opción recomendada; en Windows, usar WSL2 con una distribución Linux compatible.
-- GPU NVIDIA compatible, drivers instalados y memoria suficiente para el modelo elegido.
-- Python 3.11 o 3.12 para la aplicación.
-- Un entorno virtual separado para la PoC.
+- Linux is recommended; on Windows, use WSL2 with a compatible Linux distribution.
+- Compatible NVIDIA GPU, installed drivers, and sufficient memory for the chosen model.
+- Python 3.11 or 3.12 for the application.
+- A separate virtual environment for the PoC.
 
-Conviene instalar vLLM siguiendo la combinación CUDA/PyTorch adecuada para la máquina en vez de fijar a ciegas una versión en el mismo entorno de la aplicación. Por eso se propone separar:
+Install vLLM using the CUDA/PyTorch combination appropriate for the machine rather than blindly pinning a version in the application's environment. Therefore, separate:
 
-- `.venv-app`: aplicación, cliente OpenAI, validación y tests.
-- `.venv-vllm`: servidor vLLM y dependencias GPU.
+- `.venv-app`: application, OpenAI client, validation, and tests.
+- `.venv-vllm`: vLLM server and GPU dependencies.
 
-## 3. Modelos ordenados por adecuación
+## 3. Models Ordered by Fit
 
-### 1. Instruct de 4B–8B que quepa holgadamente en la GPU
+### 1. 4B–8B Instruct Model That Fits Comfortably on the GPU
 
-Es la opción más adecuada para el PoC: tiene capacidad suficiente para resumir información estructurada, arranca razonablemente rápido y permite repetir el experimento sin un coste excesivo. Un ejemplo inicial es `Qwen/Qwen3-4B-Instruct-2507`.
+This is the most suitable option for the PoC: it is capable of summarizing structured information, starts reasonably quickly, and allows the experiment to be repeated without excessive cost. An initial example is `Qwen/Qwen3-4B-Instruct-2507`.
 
-**Consideración final:** dejar margen de VRAM para KV cache; un modelo más grande no hace necesariamente mejor el experimento si obliga a reducir contexto o provoca inestabilidad.
+**Final consideration:** leave VRAM headroom for the KV cache; a larger model does not necessarily improve the experiment if it forces a smaller context or causes instability.
 
-### 2. Instruct pequeño de 1B–3B
+### 2. Small 1B–3B Instruct Model
 
-Facilita ejecutar la demo con hardware limitado y puede hacer más visible la pérdida de información.
+It makes the demo easier to run on limited hardware and may make information loss more visible.
 
-**Consideración final:** sus errores de formato pueden confundirse con el fenómeno estudiado; deben contabilizarse por separado.
+**Final consideration:** formatting errors may be confused with the phenomenon under study; they must be counted separately.
 
-### 3. Modelo grande cuantizado
+### 3. Large Quantized Model
 
-Puede ofrecer una compactación de mayor calidad, pero introduce más variables, tiempos de ejecución y posibles diferencias del backend de cuantización.
+It may provide higher-quality compaction, but introduces more variables, execution time, and possible differences in the quantization backend.
 
-**Consideración final:** reservarlo para comparar modelos después de validar el protocolo.
+**Final consideration:** reserve it for model comparisons after validating the protocol.
 
-## 4. Arranque recomendado
+## 4. Recommended Startup
 
 ```bash
 vllm serve Qwen/Qwen3-4B-Instruct-2507 \
@@ -46,43 +46,43 @@ vllm serve Qwen/Qwen3-4B-Instruct-2507 \
   --generation-config vllm
 ```
 
-`--generation-config vllm` ayuda a que la configuración embebida del modelo no cambie silenciosamente parámetros del experimento. La aplicación enviará temperatura, semilla y máximo de tokens de forma explícita.
+`--generation-config vllm` helps prevent the model's embedded configuration from silently changing experiment parameters. The application will explicitly send temperature, seed, and maximum tokens.
 
-## 5. Comprobación del servidor
+## 5. Server Check
 
 ```bash
 curl http://127.0.0.1:8000/v1/models
 ```
 
-Después:
+Then:
 
 ```bash
 python -m memory_cliff.cli health
 python -m memory_cliff.cli run --strategies baseline triage --rounds 5
 ```
 
-## 6. Reproducibilidad
+## 6. Reproducibility
 
-Cada ejecución guardará:
+Each run will save:
 
 - modelo servido;
 - versión de vLLM;
 - semilla solicitada;
-- temperatura y límites de salida;
+- temperature and output limits;
 - presupuesto de compactación;
 - hash del dataset;
-- respuestas brutas y métricas por ronda.
+- raw responses and per-round metrics.
 
-Aunque se use temperatura cero y semilla, no debe asumirse determinismo perfecto entre GPUs, kernels o versiones. Para resultados comparables, usar la misma máquina e imagen de entorno y repetir al menos tres veces.
+Even with zero temperature and a seed, perfect determinism across GPUs, kernels, or versions must not be assumed. For comparable results, use the same machine and environment image and repeat at least three times.
 
-## 7. Seguridad y aislamiento
+## 7. Security and Isolation
 
-- Escuchar solo en `127.0.0.1`, no en `0.0.0.0`, salvo necesidad consciente.
-- No enviar datos sensibles reales: el dataset será sintético.
-- No habilitar descarga de código remoto salvo que el modelo lo requiera y se haya revisado.
-- No introducir una API key real; para localhost basta una cadena ficticia si el cliente la exige.
+- Listen only on `127.0.0.1`, not `0.0.0.0`, unless consciously required.
+- Do not send real sensitive data: the dataset will be synthetic.
+- Do not enable remote code downloads unless the model requires it and it has been reviewed.
+- Do not introduce a real API key; for localhost, a fictional string is sufficient if the client requires one.
 
-## 8. Alternativa sin GPU
+## 8. No-GPU Alternative
 
-El modo `--offline` usa `FakeCompactor` y valida aplicación, políticas, métricas e informes. No demuestra comportamiento de un LLM, pero permite desarrollar y ejecutar todos los tests unitarios sin vLLM.
+The `--offline` mode uses `FakeCompactor` and validates the application, policies, metrics, and reports. It does not demonstrate LLM behavior, but allows all unit tests to be developed and run without vLLM.
 
