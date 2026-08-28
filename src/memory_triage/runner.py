@@ -37,7 +37,7 @@ def run_experiment(
             }
         rounds.append({"round": round_number, "strategies": strategy_results})
     return {
-        "run_id": datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ"),
+        "run_id": datetime.now(UTC).strftime("%Y%m%dT%H%M%S.%fZ"),
         "mode": "offline",
         "settings": {"rounds": config.rounds},
         "rounds": rounds,

@@ -17,6 +17,7 @@ def write_reports(result: dict[str, Any], output_dir: Path) -> None:
             lines.append(
                 f"- **{name}**: recall={metrics['recall']:.3f}, "
                 f"weighted_recall={metrics['weighted_recall']:.3f}, "
+                f"ambiguous={len(metrics['ambiguous_ids'])}, "
                 f"lost={len(metrics['lost_ids'])}"
             )
         lines.append("")
