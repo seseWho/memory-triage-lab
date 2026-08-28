@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from importlib.resources import files
 from pathlib import Path
 
 from memory_triage.dataset import dataset_hash, load_dataset
@@ -10,7 +11,7 @@ from memory_triage.strategies import FakeBaselineStrategy, FakeTriageStrategy
 
 
 def default_dataset() -> Path:
-    return Path(__file__).resolve().parents[2] / "data" / "memory_items.json"
+    return Path(str(files("memory_triage").joinpath("data/memory_items.json")))
 
 
 def build_parser() -> argparse.ArgumentParser:
