@@ -27,3 +27,14 @@ The fake compactor is a software-test instrument, not evidence about real LLM be
 
 Detailed design and protocol documents are available in [`docs/`](docs/README.md).
 
+## Local vLLM reference profile
+
+The repository includes a Docker profile derived from a previously validated RTX 3060 12 GB setup:
+
+```powershell
+Copy-Item .env.example .env
+docker compose up -d vllm
+./scripts/check-vllm.ps1
+```
+
+See [`docs/07-vllm-docker-reference-profile.md`](docs/07-vllm-docker-reference-profile.md) before starting the model. The profile is not considered validated for this PoC until its smoke test is run and recorded here.

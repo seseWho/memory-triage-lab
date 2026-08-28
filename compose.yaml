@@ -1,0 +1,39 @@
+services:
+  vllm:
+    image: vllm/vllm-openai:v0.8.5
+    container_name: memory-triage-vllm
+    restart: "no"
+    ports:
+      - "127.0.0.1:${VLLM_PORT:-8000}:8000"
+    shm_size: "8gb"
+    volumes:
+      - type: bind
+        source: "${HF_HOME:?Set HF_HOME to a persistent host directory}"
+        target: /root/.cache/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command:
+      - --model
+      - ${VLLM_MODEL:-Qwen/Qwen3-8B-AWQ}
+      - --served-model-name
+      - ${VLLM_SERVED_MODEL_NAME:-qwen3-8b-awq}
+      - --quantization
+      - awq_marlin
+      - --dtype
+      - half
+      - --max-model-len
+      - ${VLLM_MAX_MODEL_LEN:-16384}
+      - --gpu-memory-utilization
+      - ${VLLM_GPU_MEMORY_UTILIZATION:-0.85}
+      - --max-num-seqs
+      - "1"
+      - --enable-prefix-caching
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
