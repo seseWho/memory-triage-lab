@@ -20,6 +20,7 @@ This repository guides an experiment; it does not attempt to fully reproduce the
 6. [06-vllm-local-guide.md](06-vllm-local-guide.md): installation, model selection, and local execution.
 7. [07-vllm-docker-reference-profile.md](07-vllm-docker-reference-profile.md): validated Docker and GPU reference profile.
 8. [08-metrics-and-reporting.md](08-metrics-and-reporting.md): exact report fields, formulas, and interpretation rules.
+9. [09-poc-conclusion.md](09-poc-conclusion.md): bounded conclusion from the five-round vLLM PoC.
 
 Generated evidence and conclusions for individual runs are indexed separately in
 [`evidence/`](../evidence/README.md).
