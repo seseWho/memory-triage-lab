@@ -53,4 +53,4 @@ docker compose up -d vllm
 ./scripts/check-vllm.ps1
 ```
 
-See [`docs/07-vllm-docker-reference-profile.md`](docs/07-vllm-docker-reference-profile.md) before starting the model. The profile is not considered validated for this PoC until its smoke test is run and recorded here.
+See [`docs/07-vllm-docker-reference-profile.md`](docs/07-vllm-docker-reference-profile.md) before starting the model. The model-catalog and structured-JSON smoke tests passed on 28 August 2026. The application adapter and real multi-round compaction experiment remain pending.
