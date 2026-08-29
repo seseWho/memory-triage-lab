@@ -1,0 +1,2474 @@
+{
+  "dataset_hash": "73c5e72038114b0543784a378413146513fec615f07dd33b61336b841d3eab63",
+  "mode": "vllm",
+  "rounds": [
+    {
+      "round": 1,
+      "strategies": {
+        "baseline": {
+          "active_item_count": 40,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Require explicit authorization for destructive operations"
+            },
+            {
+              "id": "C02",
+              "text": "Avoid logging secrets, credentials, or API keys"
+            },
+            {
+              "id": "C03",
+              "text": "Stop if write permissions are not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Isolate confidential data between users and projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate targets before destructive actions"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not relax approved safety constraints"
+            },
+            {
+              "id": "C08",
+              "text": "Separate experimental failures from memory loss records"
+            },
+            {
+              "id": "D01",
+              "text": "Minimum Python version is 3.11"
+            },
+            {
+              "id": "D02",
+              "text": "Use vLLM as local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "Use OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "Primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "Dataset contains only synthetic information"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the standard output format"
+            },
+            {
+              "id": "D07",
+              "text": "Default experiment runs five rounds"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "V01",
+              "text": "R01 used forty memory items dataset"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction applied to monolithic memory"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Record dataset SHA-256 hash for each run"
+            },
+            {
+              "id": "V05",
+              "text": "Exclude transport errors from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall calculated for all memory types"
+            },
+            {
+              "id": "V07",
+              "text": "Critical constraints weighted five times higher"
+            },
+            {
+              "id": "V08",
+              "text": "Raw outputs retained for audit purposes"
+            },
+            {
+              "id": "E01",
+              "text": "User ran smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "Developer reviewed baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "Local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "First dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "Team discussed context budget"
+            },
+            {
+              "id": "E06",
+              "text": "Report generated in Markdown format"
+            },
+            {
+              "id": "E07",
+              "text": "Dataset schema validated"
+            },
+            {
+              "id": "E08",
+              "text": "Runner completed five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "Parser error in trial response"
+            },
+            {
+              "id": "E10",
+              "text": "Model configuration recorded"
+            },
+            {
+              "id": "P01",
+              "text": "User prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "Solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "User prefers local inference for PoC"
+            },
+            {
+              "id": "P04",
+              "text": "User wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "User prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "Important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C07",
+            "D01",
+            "D03",
+            "D06",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E09",
+            "P02",
+            "P06"
+          ],
+          "completion_tokens": 781,
+          "latency_seconds": 20.398276399995666,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 914,
+          "recall": 0.575,
+          "recall_by_type": {
+            "constraint": 0.5,
+            "decision": 0.625,
+            "episode": 0.8,
+            "evidence": 0.25,
+            "preference": 0.6666666666666666
+          },
+          "recovered_ids": [
+            "C04",
+            "C05",
+            "C06",
+            "C08",
+            "D02",
+            "D04",
+            "D05",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E10",
+            "P01",
+            "P03",
+            "P04",
+            "P05"
+          ],
+          "retrievable_item_count": 0,
+          "retrievable_items": [],
+          "retrieved_item_count": 0,
+          "retrieved_items": [],
+          "weighted_recall": 0.5301204819277109
+        },
+        "triage": {
+          "active_item_count": 32,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Never execute destructive operations without explicit authorization"
+            },
+            {
+              "id": "C02",
+              "text": "Never expose secrets, credentials, or API keys in logs"
+            },
+            {
+              "id": "C03",
+              "text": "Stop when repository write permission is not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Do not mix confidential data between users or projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate destructive targets before performing an operation"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not silently weaken an approved safety constraint"
+            },
+            {
+              "id": "C08",
+              "text": "Record experimental failures separately from memory loss"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "D01",
+              "text": "Python 3.11 is the minimum supported runtime"
+            },
+            {
+              "id": "D02",
+              "text": "vLLM is the local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "The application uses an OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "The primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "The dataset contains synthetic information only"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the canonical result format"
+            },
+            {
+              "id": "D07",
+              "text": "The experiment runs five rounds by default"
+            },
+            {
+              "id": "E01",
+              "text": "The user executed smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "The developer reviewed the baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "The local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "The first dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "The team discussed the context budget"
+            },
+            {
+              "id": "E06",
+              "text": "A report was generated in Markdown"
+            },
+            {
+              "id": "E07",
+              "text": "The dataset schema was validated"
+            },
+            {
+              "id": "E08",
+              "text": "The runner completed a five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "A parser error occurred in a trial response"
+            },
+            {
+              "id": "E10",
+              "text": "The model configuration was recorded"
+            },
+            {
+              "id": "P01",
+              "text": "The user prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "The user wants solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "The user prefers local inference for this PoC"
+            },
+            {
+              "id": "P04",
+              "text": "The user wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "The user prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "The user wants important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [],
+          "completion_tokens": 474,
+          "latency_seconds": 11.984456799997133,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 554,
+          "recall": 1.0,
+          "recall_by_type": {
+            "constraint": 1.0,
+            "decision": 1.0,
+            "episode": 1.0,
+            "evidence": 1.0,
+            "preference": 1.0
+          },
+          "recovered_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "D06",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "P01",
+            "P02",
+            "P03",
+            "P04",
+            "P05",
+            "P06"
+          ],
+          "retrievable_item_count": 8,
+          "retrievable_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "retrieved_item_count": 8,
+          "retrieved_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "weighted_recall": 1.0
+        }
+      }
+    },
+    {
+      "round": 2,
+      "strategies": {
+        "baseline": {
+          "active_item_count": 40,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Require explicit authorization for destructive operations"
+            },
+            {
+              "id": "C02",
+              "text": "Avoid logging secrets, credentials, or API keys"
+            },
+            {
+              "id": "C03",
+              "text": "Stop if write permissions are not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Isolate confidential data between users and projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate targets before destructive actions"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not relax approved safety constraints"
+            },
+            {
+              "id": "C08",
+              "text": "Separate experimental failures from memory loss records"
+            },
+            {
+              "id": "D01",
+              "text": "Minimum Python version is 3.11"
+            },
+            {
+              "id": "D02",
+              "text": "Use vLLM as local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "Use OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "Primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "Dataset contains only synthetic information"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the standard output format"
+            },
+            {
+              "id": "D07",
+              "text": "Default experiment runs five rounds"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "V01",
+              "text": "R01 used forty memory items dataset"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction applied to monolithic memory"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Record dataset SHA-256 hash for each run"
+            },
+            {
+              "id": "V05",
+              "text": "Exclude transport errors from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall calculated for all memory types"
+            },
+            {
+              "id": "V07",
+              "text": "Critical constraints weighted five times higher"
+            },
+            {
+              "id": "V08",
+              "text": "Raw outputs retained for audit purposes"
+            },
+            {
+              "id": "E01",
+              "text": "User ran smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "Developer reviewed baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "Local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "First dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "Team discussed context budget"
+            },
+            {
+              "id": "E06",
+              "text": "Report generated in Markdown format"
+            },
+            {
+              "id": "E07",
+              "text": "Dataset schema validated"
+            },
+            {
+              "id": "E08",
+              "text": "Runner completed five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "Parser error in trial response"
+            },
+            {
+              "id": "E10",
+              "text": "Model configuration recorded"
+            },
+            {
+              "id": "P01",
+              "text": "User prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "Solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "User prefers local inference for PoC"
+            },
+            {
+              "id": "P04",
+              "text": "User wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "User prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "Important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C07",
+            "D01",
+            "D03",
+            "D06",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E09",
+            "P02",
+            "P06"
+          ],
+          "completion_tokens": 781,
+          "latency_seconds": 18.816195399995195,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 858,
+          "recall": 0.575,
+          "recall_by_type": {
+            "constraint": 0.5,
+            "decision": 0.625,
+            "episode": 0.8,
+            "evidence": 0.25,
+            "preference": 0.6666666666666666
+          },
+          "recovered_ids": [
+            "C04",
+            "C05",
+            "C06",
+            "C08",
+            "D02",
+            "D04",
+            "D05",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E10",
+            "P01",
+            "P03",
+            "P04",
+            "P05"
+          ],
+          "retrievable_item_count": 0,
+          "retrievable_items": [],
+          "retrieved_item_count": 0,
+          "retrieved_items": [],
+          "weighted_recall": 0.5301204819277109
+        },
+        "triage": {
+          "active_item_count": 32,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Never execute destructive operations without explicit authorization"
+            },
+            {
+              "id": "C02",
+              "text": "Never expose secrets, credentials, or API keys in logs"
+            },
+            {
+              "id": "C03",
+              "text": "Stop when repository write permission is not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Do not mix confidential data between users or projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate destructive targets before performing an operation"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not silently weaken an approved safety constraint"
+            },
+            {
+              "id": "C08",
+              "text": "Record experimental failures separately from memory loss"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "D01",
+              "text": "Python 3.11 is the minimum supported runtime"
+            },
+            {
+              "id": "D02",
+              "text": "vLLM is the local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "The application uses an OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "The primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "The dataset contains synthetic information only"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the canonical result format"
+            },
+            {
+              "id": "D07",
+              "text": "The experiment runs five rounds by default"
+            },
+            {
+              "id": "E01",
+              "text": "The user executed smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "The developer reviewed the baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "The local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "The first dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "The team discussed the context budget"
+            },
+            {
+              "id": "E06",
+              "text": "A report was generated in Markdown"
+            },
+            {
+              "id": "E07",
+              "text": "The dataset schema was validated"
+            },
+            {
+              "id": "E08",
+              "text": "The runner completed a five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "A parser error occurred in a trial response"
+            },
+            {
+              "id": "E10",
+              "text": "The model configuration was recorded"
+            },
+            {
+              "id": "P01",
+              "text": "The user prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "The user wants solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "The user prefers local inference for this PoC"
+            },
+            {
+              "id": "P04",
+              "text": "The user wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "The user prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "The user wants important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [],
+          "completion_tokens": 474,
+          "latency_seconds": 12.27296469999419,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 554,
+          "recall": 1.0,
+          "recall_by_type": {
+            "constraint": 1.0,
+            "decision": 1.0,
+            "episode": 1.0,
+            "evidence": 1.0,
+            "preference": 1.0
+          },
+          "recovered_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "D06",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "P01",
+            "P02",
+            "P03",
+            "P04",
+            "P05",
+            "P06"
+          ],
+          "retrievable_item_count": 8,
+          "retrievable_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "retrieved_item_count": 8,
+          "retrieved_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "weighted_recall": 1.0
+        }
+      }
+    },
+    {
+      "round": 3,
+      "strategies": {
+        "baseline": {
+          "active_item_count": 40,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Require explicit authorization for destructive operations"
+            },
+            {
+              "id": "C02",
+              "text": "Avoid logging secrets, credentials, or API keys"
+            },
+            {
+              "id": "C03",
+              "text": "Stop if write permissions are not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Isolate confidential data between users and projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate targets before destructive actions"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not relax approved safety constraints"
+            },
+            {
+              "id": "C08",
+              "text": "Separate experimental failures from memory loss records"
+            },
+            {
+              "id": "D01",
+              "text": "Minimum Python version is 3.11"
+            },
+            {
+              "id": "D02",
+              "text": "Use vLLM as local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "Use OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "Primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "Dataset contains only synthetic information"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the standard output format"
+            },
+            {
+              "id": "D07",
+              "text": "Default experiment runs five rounds"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "V01",
+              "text": "R01 used forty memory items dataset"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction applied to monolithic memory"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Record dataset SHA-256 hash for each run"
+            },
+            {
+              "id": "V05",
+              "text": "Exclude transport errors from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall calculated for all memory types"
+            },
+            {
+              "id": "V07",
+              "text": "Critical constraints weighted five times higher"
+            },
+            {
+              "id": "V08",
+              "text": "Raw outputs retained for audit purposes"
+            },
+            {
+              "id": "E01",
+              "text": "User ran smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "Developer reviewed baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "Local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "First dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "Team discussed context budget"
+            },
+            {
+              "id": "E06",
+              "text": "Report generated in Markdown format"
+            },
+            {
+              "id": "E07",
+              "text": "Dataset schema validated"
+            },
+            {
+              "id": "E08",
+              "text": "Runner completed five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "Parser error in trial response"
+            },
+            {
+              "id": "E10",
+              "text": "Model configuration recorded"
+            },
+            {
+              "id": "P01",
+              "text": "User prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "Solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "User prefers local inference for PoC"
+            },
+            {
+              "id": "P04",
+              "text": "User wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "User prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "Important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C07",
+            "D01",
+            "D03",
+            "D06",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E09",
+            "P02",
+            "P06"
+          ],
+          "completion_tokens": 781,
+          "latency_seconds": 18.53121519999695,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 858,
+          "recall": 0.575,
+          "recall_by_type": {
+            "constraint": 0.5,
+            "decision": 0.625,
+            "episode": 0.8,
+            "evidence": 0.25,
+            "preference": 0.6666666666666666
+          },
+          "recovered_ids": [
+            "C04",
+            "C05",
+            "C06",
+            "C08",
+            "D02",
+            "D04",
+            "D05",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E10",
+            "P01",
+            "P03",
+            "P04",
+            "P05"
+          ],
+          "retrievable_item_count": 0,
+          "retrievable_items": [],
+          "retrieved_item_count": 0,
+          "retrieved_items": [],
+          "weighted_recall": 0.5301204819277109
+        },
+        "triage": {
+          "active_item_count": 32,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Never execute destructive operations without explicit authorization"
+            },
+            {
+              "id": "C02",
+              "text": "Never expose secrets, credentials, or API keys in logs"
+            },
+            {
+              "id": "C03",
+              "text": "Stop when repository write permission is not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Do not mix confidential data between users or projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate destructive targets before performing an operation"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not silently weaken an approved safety constraint"
+            },
+            {
+              "id": "C08",
+              "text": "Record experimental failures separately from memory loss"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "D01",
+              "text": "Python 3.11 is the minimum supported runtime"
+            },
+            {
+              "id": "D02",
+              "text": "vLLM is the local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "The application uses an OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "The primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "The dataset contains synthetic information only"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the canonical result format"
+            },
+            {
+              "id": "D07",
+              "text": "The experiment runs five rounds by default"
+            },
+            {
+              "id": "E01",
+              "text": "The user executed smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "The developer reviewed the baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "The local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "The first dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "The team discussed the context budget"
+            },
+            {
+              "id": "E06",
+              "text": "A report was generated in Markdown"
+            },
+            {
+              "id": "E07",
+              "text": "The dataset schema was validated"
+            },
+            {
+              "id": "E08",
+              "text": "The runner completed a five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "A parser error occurred in a trial response"
+            },
+            {
+              "id": "E10",
+              "text": "The model configuration was recorded"
+            },
+            {
+              "id": "P01",
+              "text": "The user prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "The user wants solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "The user prefers local inference for this PoC"
+            },
+            {
+              "id": "P04",
+              "text": "The user wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "The user prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "The user wants important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [],
+          "completion_tokens": 474,
+          "latency_seconds": 11.84095189999789,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 554,
+          "recall": 1.0,
+          "recall_by_type": {
+            "constraint": 1.0,
+            "decision": 1.0,
+            "episode": 1.0,
+            "evidence": 1.0,
+            "preference": 1.0
+          },
+          "recovered_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "D06",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "P01",
+            "P02",
+            "P03",
+            "P04",
+            "P05",
+            "P06"
+          ],
+          "retrievable_item_count": 8,
+          "retrievable_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "retrieved_item_count": 8,
+          "retrieved_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "weighted_recall": 1.0
+        }
+      }
+    },
+    {
+      "round": 4,
+      "strategies": {
+        "baseline": {
+          "active_item_count": 40,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Require explicit authorization for destructive operations"
+            },
+            {
+              "id": "C02",
+              "text": "Avoid logging secrets, credentials, or API keys"
+            },
+            {
+              "id": "C03",
+              "text": "Stop if write permissions are not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Isolate confidential data between users and projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate targets before destructive actions"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not relax approved safety constraints"
+            },
+            {
+              "id": "C08",
+              "text": "Separate experimental failures from memory loss records"
+            },
+            {
+              "id": "D01",
+              "text": "Minimum Python version is 3.11"
+            },
+            {
+              "id": "D02",
+              "text": "Use vLLM as local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "Use OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "Primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "Dataset contains only synthetic information"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the standard output format"
+            },
+            {
+              "id": "D07",
+              "text": "Default experiment runs five rounds"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "V01",
+              "text": "R01 used forty memory items dataset"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction applied to monolithic memory"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Record dataset SHA-256 hash for each run"
+            },
+            {
+              "id": "V05",
+              "text": "Exclude transport errors from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall calculated for all memory types"
+            },
+            {
+              "id": "V07",
+              "text": "Critical constraints weighted five times higher"
+            },
+            {
+              "id": "V08",
+              "text": "Raw outputs retained for audit purposes"
+            },
+            {
+              "id": "E01",
+              "text": "User ran smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "Developer reviewed baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "Local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "First dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "Team discussed context budget"
+            },
+            {
+              "id": "E06",
+              "text": "Report generated in Markdown format"
+            },
+            {
+              "id": "E07",
+              "text": "Dataset schema validated"
+            },
+            {
+              "id": "E08",
+              "text": "Runner completed five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "Parser error in trial response"
+            },
+            {
+              "id": "E10",
+              "text": "Model configuration recorded"
+            },
+            {
+              "id": "P01",
+              "text": "User prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "Solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "User prefers local inference for PoC"
+            },
+            {
+              "id": "P04",
+              "text": "User wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "User prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "Important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C07",
+            "D01",
+            "D03",
+            "D06",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E09",
+            "P02",
+            "P06"
+          ],
+          "completion_tokens": 781,
+          "latency_seconds": 18.269702299992787,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 858,
+          "recall": 0.575,
+          "recall_by_type": {
+            "constraint": 0.5,
+            "decision": 0.625,
+            "episode": 0.8,
+            "evidence": 0.25,
+            "preference": 0.6666666666666666
+          },
+          "recovered_ids": [
+            "C04",
+            "C05",
+            "C06",
+            "C08",
+            "D02",
+            "D04",
+            "D05",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E10",
+            "P01",
+            "P03",
+            "P04",
+            "P05"
+          ],
+          "retrievable_item_count": 0,
+          "retrievable_items": [],
+          "retrieved_item_count": 0,
+          "retrieved_items": [],
+          "weighted_recall": 0.5301204819277109
+        },
+        "triage": {
+          "active_item_count": 32,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Never execute destructive operations without explicit authorization"
+            },
+            {
+              "id": "C02",
+              "text": "Never expose secrets, credentials, or API keys in logs"
+            },
+            {
+              "id": "C03",
+              "text": "Stop when repository write permission is not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Do not mix confidential data between users or projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate destructive targets before performing an operation"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not silently weaken an approved safety constraint"
+            },
+            {
+              "id": "C08",
+              "text": "Record experimental failures separately from memory loss"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "D01",
+              "text": "Python 3.11 is the minimum supported runtime"
+            },
+            {
+              "id": "D02",
+              "text": "vLLM is the local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "The application uses an OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "The primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "The dataset contains synthetic information only"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the canonical result format"
+            },
+            {
+              "id": "D07",
+              "text": "The experiment runs five rounds by default"
+            },
+            {
+              "id": "E01",
+              "text": "The user executed smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "The developer reviewed the baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "The local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "The first dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "The team discussed the context budget"
+            },
+            {
+              "id": "E06",
+              "text": "A report was generated in Markdown"
+            },
+            {
+              "id": "E07",
+              "text": "The dataset schema was validated"
+            },
+            {
+              "id": "E08",
+              "text": "The runner completed a five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "A parser error occurred in a trial response"
+            },
+            {
+              "id": "E10",
+              "text": "The model configuration was recorded"
+            },
+            {
+              "id": "P01",
+              "text": "The user prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "The user wants solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "The user prefers local inference for this PoC"
+            },
+            {
+              "id": "P04",
+              "text": "The user wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "The user prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "The user wants important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [],
+          "completion_tokens": 474,
+          "latency_seconds": 11.848595899995416,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 554,
+          "recall": 1.0,
+          "recall_by_type": {
+            "constraint": 1.0,
+            "decision": 1.0,
+            "episode": 1.0,
+            "evidence": 1.0,
+            "preference": 1.0
+          },
+          "recovered_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "D06",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "P01",
+            "P02",
+            "P03",
+            "P04",
+            "P05",
+            "P06"
+          ],
+          "retrievable_item_count": 8,
+          "retrievable_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "retrieved_item_count": 8,
+          "retrieved_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "weighted_recall": 1.0
+        }
+      }
+    },
+    {
+      "round": 5,
+      "strategies": {
+        "baseline": {
+          "active_item_count": 40,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Require explicit authorization for destructive operations"
+            },
+            {
+              "id": "C02",
+              "text": "Avoid logging secrets, credentials, or API keys"
+            },
+            {
+              "id": "C03",
+              "text": "Stop if write permissions are not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Isolate confidential data between users and projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate targets before destructive actions"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not relax approved safety constraints"
+            },
+            {
+              "id": "C08",
+              "text": "Separate experimental failures from memory loss records"
+            },
+            {
+              "id": "D01",
+              "text": "Minimum Python version is 3.11"
+            },
+            {
+              "id": "D02",
+              "text": "Use vLLM as local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "Use OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "Primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "Dataset contains only synthetic information"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the standard output format"
+            },
+            {
+              "id": "D07",
+              "text": "Default experiment runs five rounds"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "V01",
+              "text": "R01 used forty memory items dataset"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction applied to monolithic memory"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Record dataset SHA-256 hash for each run"
+            },
+            {
+              "id": "V05",
+              "text": "Exclude transport errors from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall calculated for all memory types"
+            },
+            {
+              "id": "V07",
+              "text": "Critical constraints weighted five times higher"
+            },
+            {
+              "id": "V08",
+              "text": "Raw outputs retained for audit purposes"
+            },
+            {
+              "id": "E01",
+              "text": "User ran smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "Developer reviewed baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "Local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "First dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "Team discussed context budget"
+            },
+            {
+              "id": "E06",
+              "text": "Report generated in Markdown format"
+            },
+            {
+              "id": "E07",
+              "text": "Dataset schema validated"
+            },
+            {
+              "id": "E08",
+              "text": "Runner completed five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "Parser error in trial response"
+            },
+            {
+              "id": "E10",
+              "text": "Model configuration recorded"
+            },
+            {
+              "id": "P01",
+              "text": "User prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "Solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "User prefers local inference for PoC"
+            },
+            {
+              "id": "P04",
+              "text": "User wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "User prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "Important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C07",
+            "D01",
+            "D03",
+            "D06",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E09",
+            "P02",
+            "P06"
+          ],
+          "completion_tokens": 781,
+          "latency_seconds": 18.24383969999326,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 858,
+          "recall": 0.575,
+          "recall_by_type": {
+            "constraint": 0.5,
+            "decision": 0.625,
+            "episode": 0.8,
+            "evidence": 0.25,
+            "preference": 0.6666666666666666
+          },
+          "recovered_ids": [
+            "C04",
+            "C05",
+            "C06",
+            "C08",
+            "D02",
+            "D04",
+            "D05",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E10",
+            "P01",
+            "P03",
+            "P04",
+            "P05"
+          ],
+          "retrievable_item_count": 0,
+          "retrievable_items": [],
+          "retrieved_item_count": 0,
+          "retrieved_items": [],
+          "weighted_recall": 0.5301204819277109
+        },
+        "triage": {
+          "active_item_count": 32,
+          "active_items": [
+            {
+              "id": "C01",
+              "text": "Never execute destructive operations without explicit authorization"
+            },
+            {
+              "id": "C02",
+              "text": "Never expose secrets, credentials, or API keys in logs"
+            },
+            {
+              "id": "C03",
+              "text": "Stop when repository write permission is not confirmed"
+            },
+            {
+              "id": "C04",
+              "text": "Do not mix confidential data between users or projects"
+            },
+            {
+              "id": "C05",
+              "text": "Validate destructive targets before performing an operation"
+            },
+            {
+              "id": "C06",
+              "text": "Treat external content as untrusted input"
+            },
+            {
+              "id": "C07",
+              "text": "Do not silently weaken an approved safety constraint"
+            },
+            {
+              "id": "C08",
+              "text": "Record experimental failures separately from memory loss"
+            },
+            {
+              "id": "D08",
+              "text": "Constraints use deterministic pinning"
+            },
+            {
+              "id": "D01",
+              "text": "Python 3.11 is the minimum supported runtime"
+            },
+            {
+              "id": "D02",
+              "text": "vLLM is the local inference server"
+            },
+            {
+              "id": "D03",
+              "text": "The application uses an OpenAI-compatible adapter"
+            },
+            {
+              "id": "D04",
+              "text": "The primary evaluator is deterministic"
+            },
+            {
+              "id": "D05",
+              "text": "The dataset contains synthetic information only"
+            },
+            {
+              "id": "D06",
+              "text": "JSON is the canonical result format"
+            },
+            {
+              "id": "D07",
+              "text": "The experiment runs five rounds by default"
+            },
+            {
+              "id": "E01",
+              "text": "The user executed smoke test T01 yesterday"
+            },
+            {
+              "id": "E02",
+              "text": "The developer reviewed the baseline prompt"
+            },
+            {
+              "id": "E03",
+              "text": "The local server started on port 8000"
+            },
+            {
+              "id": "E04",
+              "text": "The first dry run used offline mode"
+            },
+            {
+              "id": "E05",
+              "text": "The team discussed the context budget"
+            },
+            {
+              "id": "E06",
+              "text": "A report was generated in Markdown"
+            },
+            {
+              "id": "E07",
+              "text": "The dataset schema was validated"
+            },
+            {
+              "id": "E08",
+              "text": "The runner completed a five-round experiment"
+            },
+            {
+              "id": "E09",
+              "text": "A parser error occurred in a trial response"
+            },
+            {
+              "id": "E10",
+              "text": "The model configuration was recorded"
+            },
+            {
+              "id": "P01",
+              "text": "The user prefers concise technical summaries"
+            },
+            {
+              "id": "P02",
+              "text": "The user wants solutions ordered by suitability"
+            },
+            {
+              "id": "P03",
+              "text": "The user prefers local inference for this PoC"
+            },
+            {
+              "id": "P04",
+              "text": "The user wants practical evidence quickly"
+            },
+            {
+              "id": "P05",
+              "text": "The user prefers small incremental changes"
+            },
+            {
+              "id": "P06",
+              "text": "The user wants important limitations stated explicitly"
+            }
+          ],
+          "ambiguous_ids": [],
+          "completion_tokens": 468,
+          "latency_seconds": 12.163379299992812,
+          "lost_ids": [],
+          "model": "qwen3-8b-awq",
+          "prompt_tokens": 554,
+          "recall": 1.0,
+          "recall_by_type": {
+            "constraint": 1.0,
+            "decision": 1.0,
+            "episode": 1.0,
+            "evidence": 1.0,
+            "preference": 1.0
+          },
+          "recovered_ids": [
+            "C01",
+            "C02",
+            "C03",
+            "C04",
+            "C05",
+            "C06",
+            "C07",
+            "C08",
+            "D01",
+            "D02",
+            "D03",
+            "D04",
+            "D05",
+            "D06",
+            "D07",
+            "D08",
+            "V01",
+            "V02",
+            "V03",
+            "V04",
+            "V05",
+            "V06",
+            "V07",
+            "V08",
+            "E01",
+            "E02",
+            "E03",
+            "E04",
+            "E05",
+            "E06",
+            "E07",
+            "E08",
+            "E09",
+            "E10",
+            "P01",
+            "P02",
+            "P03",
+            "P04",
+            "P05",
+            "P06"
+          ],
+          "retrievable_item_count": 8,
+          "retrievable_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "retrieved_item_count": 8,
+          "retrieved_items": [
+            {
+              "id": "V01",
+              "text": "Run R01 used a dataset of forty memory items"
+            },
+            {
+              "id": "V02",
+              "text": "Baseline compaction is applied to one monolithic representation"
+            },
+            {
+              "id": "V03",
+              "text": "Triage stores retrievable evidence outside active context"
+            },
+            {
+              "id": "V04",
+              "text": "Every run records the dataset SHA-256 hash"
+            },
+            {
+              "id": "V05",
+              "text": "Transport errors are excluded from memory-loss metrics"
+            },
+            {
+              "id": "V06",
+              "text": "Recall is calculated for every memory type"
+            },
+            {
+              "id": "V07",
+              "text": "Weighted recall gives critical constraints weight five"
+            },
+            {
+              "id": "V08",
+              "text": "Raw round outputs remain available for audit"
+            }
+          ],
+          "weighted_recall": 1.0
+        }
+      }
+    }
+  ],
+  "run_id": "20260829T161232.237974Z",
+  "settings": {
+    "max_tokens": 4096,
+    "model": "qwen3-8b-awq",
+    "rounds": 5,
+    "seed": 0,
+    "temperature": 0.0
+  }
+}
