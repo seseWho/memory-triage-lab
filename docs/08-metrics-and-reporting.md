@@ -93,6 +93,13 @@ Number of items kept outside active context in the retrievable tier. These items
 as recovered by the evaluator unless an explicit retrieval step places them in the scored active
 snapshot. Retrieval ranking and query quality remain future work.
 
+### `retrieved_item_count` and `retrieved_items`
+
+Items explicitly returned by a strategy's retrieval step for scoring in the current round. The
+current PoC uses an intentionally simple retrieval oracle that requests every item in the
+`RETRIEVE` tier. This proves the accounting boundary, but it is not evidence of query ranking or
+retrieval quality; a later experiment must replace it with task-driven queries.
+
 ### `active_items` and `retrievable_items`
 
 Auditable per-round traces containing the stable ID and exact resulting text of every item in each

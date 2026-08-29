@@ -43,6 +43,7 @@ def test_run_persists_auditable_item_text_and_settings() -> None:
     assert set(first_item) == {"id", "text"}
     assert first_item["id"]
     assert first_item["text"]
+    assert baseline["retrieved_item_count"] == 0
     assert result["settings"] == {
         "rounds": 1,
         "model": "test-model",

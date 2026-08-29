@@ -48,9 +48,11 @@ def preserves_check_terms(expected: MemoryItem, actual: MemoryItem) -> bool:
 
 
 def evaluate(original: tuple[MemoryItem, ...], snapshot: StrategySnapshot) -> EvaluationResult:
-    # Retrieval is deliberately not implicit: items outside active context are
-    # not preserved until a future experiment explicitly retrieves them.
-    available = {item.id: item for item in snapshot.active_items}
+    # Retrieval is explicit: only active items and items returned by the
+    # strategy's retrieval step are available to the preservation score.
+    available = {
+        item.id: item for item in (*snapshot.active_items, *snapshot.retrieved_items)
+    }
     recovered = tuple(
         item.id
         for item in original

@@ -73,6 +73,9 @@ class LLMTriageStrategy:
         return StrategySnapshot(
             active_items=(*pinned, *compacted.active_items),
             retrievable_items=retrievable,
+            # PoC retrieval oracle: explicitly request every item in the
+            # RETRIEVE tier so scoring can distinguish retrieval from storage.
+            retrieved_items=retrievable,
             model=compacted.model,
             prompt_tokens=compacted.prompt_tokens,
             completion_tokens=compacted.completion_tokens,
@@ -171,5 +174,6 @@ class FakeTriageStrategy:
         drop_count = min(len(compactable), round_number * 2)
         active_compacted = compactable[drop_count:]
         return StrategySnapshot(
-            active_items=(*pinned, *active_compacted), retrievable_items=retrievable
+            active_items=(*pinned, *active_compacted), retrievable_items=retrievable,
+            retrieved_items=retrievable,
         )
