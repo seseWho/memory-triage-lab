@@ -6,13 +6,29 @@ The project supports both a deterministic offline run and a real five-round expe
 
 ## Quick start
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e ".[dev]"
-memory-triage run --offline
-pytest
+This project uses [uv](https://docs.astral.sh/uv/) to create the virtual environment and manage dependencies. You do not need to activate the environment manually.
+
+Install uv if it is not already available:
+
+```powershell
+irm https://astral.sh/uv/install.ps1 | iex
 ```
+
+On Linux or macOS, use:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+From the repository root, sync the application and development dependencies:
+
+```bash
+uv sync --extra dev
+uv run memory-triage run --offline
+uv run pytest
+```
+
+Use `uv run <command>` for project commands. It runs them in the project's managed environment, so activation is optional.
 
 Results are written to a timestamped directory under `results/` unless `--output` is supplied.
 
