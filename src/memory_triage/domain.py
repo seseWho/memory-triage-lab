@@ -62,6 +62,10 @@ class MemoryItem:
 class StrategySnapshot:
     active_items: tuple[MemoryItem, ...]
     retrievable_items: tuple[MemoryItem, ...] = ()
+    model: str | None = None
+    prompt_tokens: int | None = None
+    completion_tokens: int | None = None
+    latency_seconds: float | None = None
 
     @property
     def all_items(self) -> tuple[MemoryItem, ...]:

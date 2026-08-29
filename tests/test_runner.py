@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from memory_triage.cli import main
 from memory_triage.dataset import load_dataset
 from memory_triage.runner import ExperimentConfig, run_experiment
@@ -21,3 +23,11 @@ def test_generated_run_ids_are_collision_safe() -> None:
     first = run_experiment(items, (FakeBaselineStrategy(),), config)
     second = run_experiment(items, (FakeBaselineStrategy(),), config)
     assert first["run_id"] != second["run_id"]
+
+
+def test_invalid_health_configuration_returns_controlled_error(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    monkeypatch.setenv("LLM_TIMEOUT_SECONDS", "invalid")
+    assert main(["health"]) == 1
+    assert "health check failed" in capsys.readouterr().out

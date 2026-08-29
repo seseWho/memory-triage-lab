@@ -9,7 +9,13 @@ from memory_triage.llm import LLMError, OpenAICompatibleClient
 from memory_triage.reporting import write_reports
 from memory_triage.runner import ExperimentConfig, run_experiment
 from memory_triage.settings import LLMSettings
-from memory_triage.strategies import FakeBaselineStrategy, FakeTriageStrategy
+from memory_triage.strategies import (
+    FakeBaselineStrategy,
+    FakeTriageStrategy,
+    LLMBaselineStrategy,
+    LLMTriageStrategy,
+    MemoryStrategy,
+)
 
 
 def default_dataset() -> Path:
@@ -31,21 +37,28 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     if args.command == "health":
-        settings = LLMSettings.from_env()
         try:
+            settings = LLMSettings.from_env()
             models = OpenAICompatibleClient(settings).health()
-        except LLMError as error:
+        except (LLMError, ValueError) as error:
             print(f"vLLM health check failed: {error}")
             return 1
         print(f"vLLM ready: model={settings.model}; available={','.join(models)}")
         return 0
-    if args.command == "run" and not args.offline:
-        raise SystemExit("Only --offline is implemented in this increment")
     items = load_dataset(args.dataset)
+    strategies: tuple[MemoryStrategy, ...]
+    if args.offline:
+        strategies = (FakeBaselineStrategy(), FakeTriageStrategy())
+        config = ExperimentConfig(rounds=args.rounds)
+    else:
+        settings = LLMSettings.from_env()
+        client = OpenAICompatibleClient(settings)
+        strategies = (LLMBaselineStrategy(client), LLMTriageStrategy(client))
+        config = ExperimentConfig(rounds=args.rounds, mode="vllm", model=settings.model)
     result = run_experiment(
         items,
-        (FakeBaselineStrategy(), FakeTriageStrategy()),
-        ExperimentConfig(rounds=args.rounds),
+        strategies,
+        config,
     )
     result["dataset_hash"] = dataset_hash(args.dataset)
     output = args.output or Path("results") / result["run_id"]
