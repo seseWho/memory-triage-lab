@@ -2,7 +2,39 @@
 
 ## Status
 
-This profile is derived from a setup validated on another local project on 25 August 2026. It is the preferred starting point for Memory Triage Lab, but it remains **unvalidated for this repository** until the project smoke test and first real compaction run are recorded.
+This profile was derived from a setup validated on another local project on 25 August 2026. The same profile has now passed the Memory Triage Lab API smoke test. The real multi-round compaction experiment remains pending.
+
+## Memory Triage Lab validation log
+
+### 28 August 2026 — API smoke test passed
+
+Command:
+
+```powershell
+./scripts/check-vllm.ps1
+```
+
+Observed result:
+
+```text
+Checking model catalog at http://localhost:8000/v1/models
+Checking structured chat completion
+vLLM checks passed for model 'qwen3-8b-awq'.
+```
+
+Validated contracts:
+
+- `GET /v1/models` returned the expected served model ID `qwen3-8b-awq`.
+- `POST /v1/chat/completions` accepted the configured model.
+- `response_format={"type":"json_object"}` returned parseable JSON.
+- The response contained the expected `{"status":"ok"}` semantic result.
+
+Not yet validated:
+
+- application-side Python adapter;
+- real baseline and triage compaction prompts;
+- five successive LLM compaction rounds;
+- recall, latency, token use, and reproducibility across repeated runs.
 
 ## Reference hardware
 
@@ -85,4 +117,3 @@ The reference environment successfully returned a direct JSON object using `resp
 - Review `docker system df -v` before removing Docker data.
 - Never run broad pruning commands without identifying affected resources.
 - Bind the host port only where needed; the experiment client uses localhost.
-
