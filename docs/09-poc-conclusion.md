@@ -1,5 +1,13 @@
 # PoC Conclusion
 
+## Source study
+
+This PoC is inspired by [The Compaction Cliff in Long-Running AI Agent Memory](https://arxiv.org/abs/2608.22752),
+by Saber Zerhoudi, Jelena Mitrovic, and Michael Granitzer (arXiv, 24 August 2026). The paper
+introduces Knowledge Triage and reports results from broader corpora, retrieval tasks, and
+downstream benchmarks. This repository implements only a small, independent demonstration of the
+typed-memory and lifecycle-policy idea; it does not reproduce the paper's full methodology.
+
 ## Scope
 
 This PoC tests whether a typed-memory lifecycle can preserve more information than a monolithic
