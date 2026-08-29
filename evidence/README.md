@@ -29,3 +29,4 @@ Metric definitions are maintained in
 | Run | Model | Rounds | Status | Main observation |
 |---|---|---:|---|---|
 | [001](runs/001-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Exploratory, partial bundle | Application path validated; methodological controls require correction before comparison |
+| [002](runs/002-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Exploratory, traceable | 17 lexical ambiguities audited: 6 probable weakenings, 11 paraphrases/false negatives |
