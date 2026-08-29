@@ -61,9 +61,9 @@ Recommendation: keep a single adapter integration test marked `integration`, and
 ## 6. Target Commands
 
 ```bash
-pytest -m "not integration"
-pytest -m integration
-python -m memory_cliff.cli run --offline
+uv run pytest -m "not integration"
+uv run pytest -m integration
+uv run memory-triage run --offline
 ```
 
 The `integration` tests require vLLM to be running; the rest must work on a machine without a GPU.

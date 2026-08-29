@@ -8,7 +8,7 @@ compaction-cliff-poc/
 ├── requirements-vllm.txt
 ├── .env.example
 ├── data/memory_items.json
-├── src/memory_cliff/
+├── src/memory_triage/
 │   ├── cli.py
 │   ├── domain.py
 │   ├── runner.py
@@ -26,7 +26,7 @@ compaction-cliff-poc/
 ## 2. Execution Flow
 
 ```bash
-python -m memory_cliff.cli run \
+uv run memory-triage run \
   --dataset data/memory_items.json \
   --rounds 5 \
   --strategies baseline triage \
@@ -49,8 +49,8 @@ The model is an initial proposal and must be adjusted to the available GPU. The 
 The following must also work:
 
 ```bash
-python -m memory_cliff.cli run --offline
-pytest
+uv run memory-triage run --offline
+uv run pytest
 ```
 
 ## 3. Ordered Backlog
@@ -103,7 +103,7 @@ Third arm with a reinforced prompt, LLM judge, embeddings, and UI.
 
 Estimated total: 8–12 hours for a clean PoC.
 
-## 5. Configuración
+## 5. Configuration
 
 ```dotenv
 LLM_API_KEY=

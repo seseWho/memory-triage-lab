@@ -57,8 +57,8 @@ curl http://127.0.0.1:8000/v1/models
 Then:
 
 ```bash
-python -m memory_cliff.cli health
-python -m memory_cliff.cli run --strategies baseline triage --rounds 5
+uv run memory-triage health
+uv run memory-triage run --offline --rounds 5
 ```
 
 ## 6. Reproducibility
