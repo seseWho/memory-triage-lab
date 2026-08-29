@@ -68,6 +68,10 @@ uv run memory-triage run --offline --rounds 5
 
 Detailed design and protocol documents are available in [`docs/`](docs/README.md).
 
+Generated experimental evidence and per-run conclusions are stored in
+[`evidence/`](evidence/README.md). Global conclusions will be produced only after the planned test
+matrix has been completed.
+
 ## Local vLLM reference profile
 
 The repository includes a Docker profile derived from a previously validated RTX 3060 12 GB setup:
