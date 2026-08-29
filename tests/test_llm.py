@@ -105,3 +105,20 @@ def test_http_failure_preserves_status() -> None:
     client = OpenAICompatibleClient(LLMSettings(), FakeOpener([error]))
     with pytest.raises(LLMResponseError, match="HTTP 503: busy"):
         client.health()
+
+
+def test_truncated_http_error_body_remains_typed() -> None:
+    class TruncatedBody(io.BytesIO):
+        def read(self, size: int | None = -1) -> bytes:
+            raise http.client.IncompleteRead(b"partial")
+
+    error = urllib.error.HTTPError(
+        "http://localhost:8000/v1/models",
+        502,
+        "bad gateway",
+        Message(),
+        TruncatedBody(),
+    )
+    client = OpenAICompatibleClient(LLMSettings(), FakeOpener([error]))
+    with pytest.raises(LLMResponseError, match="HTTP 502: partial"):
+        client.health()

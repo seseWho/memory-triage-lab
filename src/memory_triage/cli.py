@@ -54,7 +54,14 @@ def main(argv: list[str] | None = None) -> int:
         settings = LLMSettings.from_env()
         client = OpenAICompatibleClient(settings)
         strategies = (LLMBaselineStrategy(client), LLMTriageStrategy(client))
-        config = ExperimentConfig(rounds=args.rounds, mode="vllm", model=settings.model)
+        config = ExperimentConfig(
+            rounds=args.rounds,
+            mode="vllm",
+            model=settings.model,
+            temperature=settings.temperature,
+            seed=settings.seed,
+            max_tokens=settings.max_tokens,
+        )
     result = run_experiment(
         items,
         strategies,
