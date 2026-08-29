@@ -25,6 +25,33 @@ def test_generated_run_ids_are_collision_safe() -> None:
     assert first["run_id"] != second["run_id"]
 
 
+def test_run_persists_auditable_item_text_and_settings() -> None:
+    from memory_triage.cli import default_dataset
+
+    items = load_dataset(default_dataset())
+    config = ExperimentConfig(
+        rounds=1,
+        mode="vllm",
+        model="test-model",
+        temperature=0.25,
+        seed=42,
+        max_tokens=512,
+    )
+    result = run_experiment(items, (FakeBaselineStrategy(),), config)
+    baseline = result["rounds"][0]["strategies"]["baseline"]
+    first_item = baseline["active_items"][0]
+    assert set(first_item) == {"id", "text"}
+    assert first_item["id"]
+    assert first_item["text"]
+    assert result["settings"] == {
+        "rounds": 1,
+        "model": "test-model",
+        "temperature": 0.25,
+        "seed": 42,
+        "max_tokens": 512,
+    }
+
+
 def test_invalid_health_configuration_returns_controlled_error(
     monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ) -> None:

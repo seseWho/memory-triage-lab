@@ -109,7 +109,10 @@ class OpenAICompatibleClient:
             with self._opener.open(request, timeout=self.settings.timeout_seconds) as response:
                 raw = response.read().decode("utf-8")
         except urllib.error.HTTPError as error:
-            detail = error.read().decode("utf-8", errors="replace")
+            try:
+                detail = error.read().decode("utf-8", errors="replace")
+            except http.client.IncompleteRead as read_error:
+                detail = read_error.partial.decode("utf-8", errors="replace")
             raise LLMResponseError(f"vLLM returned HTTP {error.code}: {detail}") from error
         except (http.client.IncompleteRead, urllib.error.URLError, TimeoutError, OSError) as error:
             raise LLMConnectionError(f"Could not reach vLLM at {self.settings.base_url}") from error

@@ -14,6 +14,9 @@ class ExperimentConfig:
     rounds: int = 5
     mode: str = "offline"
     model: str | None = None
+    temperature: float | None = None
+    seed: int | None = None
+    max_tokens: int | None = None
 
     def __post_init__(self) -> None:
         if self.rounds < 1:
@@ -40,11 +43,23 @@ def run_experiment(
                 "prompt_tokens": snapshot.prompt_tokens,
                 "completion_tokens": snapshot.completion_tokens,
                 "latency_seconds": snapshot.latency_seconds,
+                "active_items": [
+                    {"id": item.id, "text": item.text} for item in snapshot.active_items
+                ],
+                "retrievable_items": [
+                    {"id": item.id, "text": item.text} for item in snapshot.retrievable_items
+                ],
             }
         rounds.append({"round": round_number, "strategies": strategy_results})
     return {
         "run_id": datetime.now(UTC).strftime("%Y%m%dT%H%M%S.%fZ"),
         "mode": config.mode,
-        "settings": {"rounds": config.rounds, "model": config.model},
+        "settings": {
+            "rounds": config.rounds,
+            "model": config.model,
+            "temperature": config.temperature,
+            "seed": config.seed,
+            "max_tokens": config.max_tokens,
+        },
         "rounds": rounds,
     }

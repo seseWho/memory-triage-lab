@@ -92,6 +92,12 @@ Number of items placed directly in active context after the round.
 Number of items kept outside active context in the retrievable tier. The current PoC counts these
 items as available to the evaluator; it does not yet measure retrieval ranking or query quality.
 
+### `active_items` and `retrievable_items`
+
+Auditable per-round traces containing the stable ID and exact resulting text of every item in each
+tier. These traces are required to classify ambiguous IDs through manual semantic review and to
+reconstruct the state used as input to the following round.
+
 ## Cost and performance metrics
 
 ### `prompt_tokens`
@@ -126,6 +132,12 @@ Unique UTC timestamp-based identifier used to separate report directories.
 ### `dataset_hash`
 
 SHA-256 of the dataset file. Matching hashes demonstrate that runs used identical source data.
+
+### Generation settings
+
+`temperature`, `seed`, and `max_tokens` record the effective values sent to vLLM. Runs with
+different generation settings are different experimental configurations and must not be pooled
+without explicit analysis.
 
 ## Interpretation rules
 
