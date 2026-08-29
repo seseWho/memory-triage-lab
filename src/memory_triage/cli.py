@@ -5,8 +5,10 @@ from importlib.resources import files
 from pathlib import Path
 
 from memory_triage.dataset import dataset_hash, load_dataset
+from memory_triage.llm import LLMError, OpenAICompatibleClient
 from memory_triage.reporting import write_reports
 from memory_triage.runner import ExperimentConfig, run_experiment
+from memory_triage.settings import LLMSettings
 from memory_triage.strategies import FakeBaselineStrategy, FakeTriageStrategy
 
 
@@ -22,11 +24,21 @@ def build_parser() -> argparse.ArgumentParser:
     run.add_argument("--rounds", type=int, default=5)
     run.add_argument("--dataset", type=Path, default=default_dataset())
     run.add_argument("--output", type=Path)
+    subparsers.add_parser("health", help="Validate the configured local vLLM server")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.command == "health":
+        settings = LLMSettings.from_env()
+        try:
+            models = OpenAICompatibleClient(settings).health()
+        except LLMError as error:
+            print(f"vLLM health check failed: {error}")
+            return 1
+        print(f"vLLM ready: model={settings.model}; available={','.join(models)}")
+        return 0
     if args.command == "run" and not args.offline:
         raise SystemExit("Only --offline is implemented in this increment")
     items = load_dataset(args.dataset)
