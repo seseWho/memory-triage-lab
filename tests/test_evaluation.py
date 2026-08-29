@@ -53,3 +53,10 @@ def test_retrievable_item_is_not_credited_without_explicit_retrieval() -> None:
     result = evaluate((expected,), StrategySnapshot(active_items=(), retrievable_items=(expected,)))
     assert result.recall == 0
     assert result.lost_ids == ("V01",)
+
+
+def test_explicitly_retrieved_item_is_credited() -> None:
+    expected = item("V01", MemoryType.EVIDENCE)
+    result = evaluate((expected,), StrategySnapshot(active_items=(), retrieved_items=(expected,)))
+    assert result.recall == 1
+    assert result.recovered_ids == ("V01",)

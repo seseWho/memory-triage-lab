@@ -39,6 +39,7 @@ def run_experiment(
                 **evaluate(items, snapshot).as_dict(),
                 "active_item_count": len(snapshot.active_items),
                 "retrievable_item_count": len(snapshot.retrievable_items),
+                "retrieved_item_count": len(snapshot.retrieved_items),
                 "model": snapshot.model,
                 "prompt_tokens": snapshot.prompt_tokens,
                 "completion_tokens": snapshot.completion_tokens,
@@ -48,6 +49,9 @@ def run_experiment(
                 ],
                 "retrievable_items": [
                     {"id": item.id, "text": item.text} for item in snapshot.retrievable_items
+                ],
+                "retrieved_items": [
+                    {"id": item.id, "text": item.text} for item in snapshot.retrieved_items
                 ],
             }
         rounds.append({"round": round_number, "strategies": strategy_results})

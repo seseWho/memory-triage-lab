@@ -62,6 +62,7 @@ class MemoryItem:
 class StrategySnapshot:
     active_items: tuple[MemoryItem, ...]
     retrievable_items: tuple[MemoryItem, ...] = ()
+    retrieved_items: tuple[MemoryItem, ...] = ()
     model: str | None = None
     prompt_tokens: int | None = None
     completion_tokens: int | None = None
@@ -71,7 +72,7 @@ class StrategySnapshot:
     def all_items(self) -> tuple[MemoryItem, ...]:
         seen: set[str] = set()
         result: list[MemoryItem] = []
-        for item in (*self.active_items, *self.retrievable_items):
+        for item in (*self.active_items, *self.retrieved_items, *self.retrievable_items):
             if item.id not in seen:
                 seen.add(item.id)
                 result.append(item)
