@@ -18,6 +18,11 @@ This repository guides an experiment; it does not attempt to fully reproduce the
 4. [04-implementation-plan.md](04-implementation-plan.md): project structure, tasks, and execution order.
 5. [05-test-plan.md](05-test-plan.md): test strategy and essential cases.
 6. [06-vllm-local-guide.md](06-vllm-local-guide.md): installation, model selection, and local execution.
+7. [07-vllm-docker-reference-profile.md](07-vllm-docker-reference-profile.md): validated Docker and GPU reference profile.
+8. [08-metrics-and-reporting.md](08-metrics-and-reporting.md): exact report fields, formulas, and interpretation rules.
+
+Generated evidence and conclusions for individual runs are indexed separately in
+[`evidence/`](../evidence/README.md).
 
 ## Expected Result
 
