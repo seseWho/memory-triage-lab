@@ -69,8 +69,9 @@ uv run memory-triage run --offline --rounds 5
 Detailed design and protocol documents are available in [`docs/`](docs/README.md).
 
 Generated experimental evidence and per-run conclusions are stored in
-[`evidence/`](evidence/README.md). Global conclusions will be produced only after the planned test
-matrix has been completed.
+[`evidence/`](evidence/README.md). The bounded PoC conclusion is available in
+[`docs/09-poc-conclusion.md`](docs/09-poc-conclusion.md); broader claims would require a larger
+test matrix.
 
 ## Local vLLM reference profile
 
