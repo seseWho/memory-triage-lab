@@ -89,8 +89,9 @@ Number of items placed directly in active context after the round.
 
 ### `retrievable_item_count`
 
-Number of items kept outside active context in the retrievable tier. The current PoC counts these
-items as available to the evaluator; it does not yet measure retrieval ranking or query quality.
+Number of items kept outside active context in the retrievable tier. These items are **not** counted
+as recovered by the evaluator unless an explicit retrieval step places them in the scored active
+snapshot. Retrieval ranking and query quality remain future work.
 
 ### `active_items` and `retrievable_items`
 
@@ -149,4 +150,5 @@ without explicit analysis.
 6. API, parsing, or transport failures must be reported separately and never counted as memory loss.
 7. Treat one run as initial evidence; use repeated runs for global conclusions.
 8. Do not compare strategies unless their total active-context budgets are enforced equally.
-9. Treat retrievable items as recovered only after an explicit, scored retrieval step.
+9. Treat retrievable items as recovered only after an explicit, scored retrieval step; placement in
+   the retrievable tier alone is not preservation.

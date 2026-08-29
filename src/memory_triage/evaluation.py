@@ -48,7 +48,9 @@ def preserves_check_terms(expected: MemoryItem, actual: MemoryItem) -> bool:
 
 
 def evaluate(original: tuple[MemoryItem, ...], snapshot: StrategySnapshot) -> EvaluationResult:
-    available = {item.id: item for item in snapshot.all_items}
+    # Retrieval is deliberately not implicit: items outside active context are
+    # not preserved until a future experiment explicitly retrieves them.
+    available = {item.id: item for item in snapshot.active_items}
     recovered = tuple(
         item.id
         for item in original

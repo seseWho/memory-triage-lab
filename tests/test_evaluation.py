@@ -46,3 +46,10 @@ def test_matching_id_with_missing_check_term_is_ambiguous() -> None:
     assert result.recall == 0
     assert result.ambiguous_ids == ("C01",)
     assert result.lost_ids == ()
+
+
+def test_retrievable_item_is_not_credited_without_explicit_retrieval() -> None:
+    expected = item("V01", MemoryType.EVIDENCE)
+    result = evaluate((expected,), StrategySnapshot(active_items=(), retrievable_items=(expected,)))
+    assert result.recall == 0
+    assert result.lost_ids == ("V01",)
