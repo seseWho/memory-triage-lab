@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import http.client
 import io
 import json
 import urllib.error
@@ -72,8 +73,22 @@ def test_completion_rejects_non_json_content() -> None:
         client.complete_json("system", "user")
 
 
+def test_completion_rejects_json_array_content() -> None:
+    response = {"choices": [{"message": {"content": "[]"}}]}
+    client = OpenAICompatibleClient(LLMSettings(), FakeOpener([response]))
+    with pytest.raises(LLMResponseError, match="JSON object"):
+        client.complete_json("system", "user")
+
+
 def test_connection_failure_is_typed() -> None:
     error = urllib.error.URLError("offline")
+    client = OpenAICompatibleClient(LLMSettings(), FakeOpener([error]))
+    with pytest.raises(LLMConnectionError, match="Could not reach"):
+        client.health()
+
+
+def test_incomplete_response_is_typed() -> None:
+    error = http.client.IncompleteRead(b'{"data":')
     client = OpenAICompatibleClient(LLMSettings(), FakeOpener([error]))
     with pytest.raises(LLMConnectionError, match="Could not reach"):
         client.health()

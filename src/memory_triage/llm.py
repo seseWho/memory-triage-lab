@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import http.client
 import json
 import urllib.error
 import urllib.request
@@ -78,9 +79,11 @@ class OpenAICompatibleClient:
         if not isinstance(content, str) or not content.strip():
             raise LLMResponseError("Completion content is empty")
         try:
-            json.loads(content)
+            decoded = json.loads(content)
         except json.JSONDecodeError as error:
             raise LLMResponseError("Completion content is not valid JSON") from error
+        if not isinstance(decoded, dict):
+            raise LLMResponseError("Completion content must be a JSON object")
         usage = payload.get("usage", {})
         return CompletionResult(
             content=content,
@@ -108,7 +111,7 @@ class OpenAICompatibleClient:
         except urllib.error.HTTPError as error:
             detail = error.read().decode("utf-8", errors="replace")
             raise LLMResponseError(f"vLLM returned HTTP {error.code}: {detail}") from error
-        except (urllib.error.URLError, TimeoutError, OSError) as error:
+        except (http.client.IncompleteRead, urllib.error.URLError, TimeoutError, OSError) as error:
             raise LLMConnectionError(f"Could not reach vLLM at {self.settings.base_url}") from error
         try:
             parsed = json.loads(raw)

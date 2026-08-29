@@ -12,6 +12,8 @@ from memory_triage.strategies import MemoryStrategy
 @dataclass(frozen=True, slots=True)
 class ExperimentConfig:
     rounds: int = 5
+    mode: str = "offline"
+    model: str | None = None
 
     def __post_init__(self) -> None:
         if self.rounds < 1:
@@ -34,11 +36,15 @@ def run_experiment(
                 **evaluate(items, snapshot).as_dict(),
                 "active_item_count": len(snapshot.active_items),
                 "retrievable_item_count": len(snapshot.retrievable_items),
+                "model": snapshot.model,
+                "prompt_tokens": snapshot.prompt_tokens,
+                "completion_tokens": snapshot.completion_tokens,
+                "latency_seconds": snapshot.latency_seconds,
             }
         rounds.append({"round": round_number, "strategies": strategy_results})
     return {
         "run_id": datetime.now(UTC).strftime("%Y%m%dT%H%M%S.%fZ"),
-        "mode": "offline",
-        "settings": {"rounds": config.rounds},
+        "mode": config.mode,
+        "settings": {"rounds": config.rounds, "model": config.model},
         "rounds": rounds,
     }
