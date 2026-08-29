@@ -30,3 +30,4 @@ Metric definitions are maintained in
 |---|---|---:|---|---|
 | [001](runs/001-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Exploratory, partial bundle | Application path validated; methodological controls require correction before comparison |
 | [002](runs/002-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Exploratory, traceable | 17 lexical ambiguities audited: 6 probable weakenings, 11 paraphrases/false negatives |
+| [003](runs/003-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Exploratory, explicit retrieval | Retrieval is now accounted for explicitly; triage evaluates 32 active + 8 retrieved items |
