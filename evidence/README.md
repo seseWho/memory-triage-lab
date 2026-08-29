@@ -28,5 +28,4 @@ Metric definitions are maintained in
 
 | Run | Model | Rounds | Status | Main observation |
 |---|---|---:|---|---|
-| [001](runs/001-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Initial, partial bundle | Triage preserved lexical recall while baseline reached an immediate degraded fixed point |
-
+| [001](runs/001-qwen3-8b-awq/README.md) | `qwen3-8b-awq` | 5 | Exploratory, partial bundle | Application path validated; methodological controls require correction before comparison |

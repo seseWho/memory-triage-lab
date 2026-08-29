@@ -136,4 +136,5 @@ SHA-256 of the dataset file. Matching hashes demonstrate that runs used identica
 5. A flat score across rounds indicates a stable compaction fixed point, not a cumulative cliff.
 6. API, parsing, or transport failures must be reported separately and never counted as memory loss.
 7. Treat one run as initial evidence; use repeated runs for global conclusions.
-
+8. Do not compare strategies unless their total active-context budgets are enforced equally.
+9. Treat retrievable items as recovered only after an explicit, scored retrieval step.

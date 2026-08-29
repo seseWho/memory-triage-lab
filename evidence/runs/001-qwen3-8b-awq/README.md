@@ -2,9 +2,10 @@
 
 ## Status
 
-Initial real vLLM evidence. The generated Markdown summary is preserved unchanged. The detailed
-`results.json` was not supplied with this evidence bundle, so item-level inspection, dataset hash
-verification, and confirmation of all effective settings remain pending.
+Exploratory real vLLM evidence. The generated Markdown summary is preserved unchanged. This run
+validates the application path but is not a controlled comparison. The detailed `results.json` was
+not supplied with this evidence bundle, so item-level inspection, dataset hash verification, and
+confirmation of all effective settings remain pending.
 
 ## Known configuration
 
@@ -20,11 +21,12 @@ verification, and confirmation of all effective settings remain pending.
 
 ## Observations
 
-### 1. Triage preserved all automatically verifiable information
+### 1. Triage reported all automatically verifiable information as available
 
 Triage reported `recall=1.000`, `weighted_recall=1.000`, no ambiguous IDs, and no lost IDs in all
-five rounds. This supports the architectural claim that deterministic lifecycle policies protect
-critical memory from repeated LLM transformation.
+five rounds. Pinned items are protected from LLM transformation. However, the current evaluator
+also credits every item in the `RETRIEVE` tier without executing a retrieval query, so this score
+must not be interpreted as measured retrieval effectiveness.
 
 ### 2. Baseline degraded 17 items without deleting their IDs
 
@@ -35,14 +37,16 @@ that higher-value information was affected slightly more than ordinary informati
 This is a lexical result. The missing `results.json` prevents manual classification of the 17
 ambiguous items as genuine semantic losses or acceptable paraphrases.
 
-### 3. Triage used fewer tokens and less time
+### 3. Triage used fewer LLM tokens and less inference time
 
 | Total over five rounds | Baseline | Triage | Triage reduction |
 |---|---:|---:|---:|
 | Prompt + completion tokens | 8,251 | 5,134 | 37.8% |
 | Latency | 95.97 s | 60.55 s | 36.9% |
 
-In this run, the better preservation score did not require higher inference cost.
+This measures only the LLM calls. The two arms do not yet enforce an equal final active-context
+budget: triage appends pinned items outside the generation ceiling. Token and latency reductions
+are useful operational observations but are not yet a fair quality-versus-budget comparison.
 
 ### 4. The run did not show a cumulative compaction cliff
 
@@ -52,17 +56,19 @@ first compaction rather than losing more information on every round.
 
 ## Run-level conclusion
 
-This execution provides initial evidence that typed triage can protect lexically verifiable memory
-while reducing inference cost. It also demonstrates immediate baseline degradation. It does not
-yet demonstrate progressive multi-round degradation, and it is not sufficient for a global claim.
+This execution validates the real vLLM integration, five-round orchestration, report generation,
+and deterministic protection of pinned items. It observes immediate lexical degradation in the
+baseline and a stable representation thereafter. Because retrieval is credited without querying,
+the active-context budgets are unequal, generation settings are not fully recorded, and detailed
+item traces are absent, this run does not establish comparative superiority or a global claim.
 
 ## Required follow-up
 
-1. Add the generated `results.json` and manually review all 17 ambiguous baseline items.
-2. Repeat the same configuration to assess determinism and reproducibility.
-3. Add controlled compaction pressure without changing multiple variables at once.
-4. Compare results across budgets, repetitions, and—later—additional models.
+1. Persist generated item text and every effective generation setting in `results.json`.
+2. Add explicit retrieval queries and score only retrieved items.
+3. Enforce the same total active-context budget after pinned items are included.
+4. Manually review all 17 ambiguous baseline items.
+5. Repeat the corrected configuration before varying compaction pressure or model.
 
 See [`docs/08-metrics-and-reporting.md`](../../../docs/08-metrics-and-reporting.md) for metric
 definitions and interpretation rules.
-
